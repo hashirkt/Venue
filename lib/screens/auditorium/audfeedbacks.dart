@@ -28,7 +28,7 @@ class _AudFeedbacksState extends State<AudFeedbacks> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              AppText(text: "View All Feedbacks",size: 14,),
+              AppText(text: "View All Feedbacks",size: 24,),
               SizedBox(height: 20,),
 
               Container(
@@ -61,9 +61,9 @@ class _AudFeedbacksState extends State<AudFeedbacks> {
 
                                   icon: Icon(Icons.arrow_forward_ios),
                                 ),
-                                title: AppText(text: "Event 1",size: 13,),
+                                title: AppText(text: "Event 1",size: 18,),
                                 subtitle: AppText(text: "Details",
-                                size: 11,),
+                                size: 16,),
                               ),
                             ),
                           ),

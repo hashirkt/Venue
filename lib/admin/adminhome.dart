@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/admin/AllEventManagers.dart';
 import 'package:venue/admin/manageauditoriums.dart';
@@ -7,7 +8,9 @@ import 'package:venue/admin/viewallauditorium.dart';
 import 'package:venue/admin/viewallfeedbacks.dart';
 import 'package:venue/admin/viewallpayments.dart';
 import 'package:venue/admin/viewallusers.dart';
+import 'package:venue/common/loginpage.dart';
 import 'package:venue/constants/colors.dart';
+import 'package:venue/screens/user/commonfeedbackadmin.dart';
 import 'package:venue/utilities/apptext.dart';
 
 
@@ -22,10 +25,51 @@ class _AdminHomePageState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+
+        child: ListView(
+          children: [
+
+
+            DrawerHeader(
+              decoration: BoxDecoration(
+                  color: backColor
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // children: [
+                //   Row(
+                //     children: [
+                //       CircleAvatar(
+                //         backgroundColor: btnColor,
+                //         radius: 35,
+                //
+                //         child: Center(
+                //           child: Text(widget.fname[0],style: TextStyle(color: Colors.white,fontSize: 22),),
+                //         ),
+                //       ),
+                //       SizedBox(width: 20,),
+                //       Text(widget.fname,style: TextStyle(color: Colors.white))
+                //     ],
+                //   )
+                // ],
+              ),
+            ),
+
+          ],
+        ),
+      ),
 
       //backgroundColor: backColor,
       appBar: AppBar(
         backgroundColor: btnColor,
+        actions: [
+          IconButton(onPressed:(){
+            FirebaseAuth.instance.signOut().then((value) {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
+            });
+          }, icon: Icon(Icons.logout))
+        ],
       ),
       body: Container(
         height: double.infinity,
@@ -36,8 +80,8 @@ class _AdminHomePageState extends State<AdminHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            AppText(text: "Admin Dashboard",size: 12,),
-             SizedBox(height: 10,),
+            AppText(text: "Admin Dashboard",size: 26,),
+             SizedBox(height: 20,),
              Container(
 
 
@@ -63,7 +107,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
 
                          ),
 
-                         child: Center(child: AppText(text: "View All Event\n Managers",color: Colors.white,size: 10,)),
+                         child: Center(child: AppText(text: "View All Event\nManagers",color: Colors.white,size: 18,)),
                        ),
                      ),
                    ),
@@ -88,7 +132,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                            borderRadius: BorderRadius.circular(12),
 
                          ),
-                         child: Center(child: AppText(text: "View All\n Auditoriums",color: Colors.white,size: 10,)),
+                         child: Center(child: AppText(text: "View All\nAuditoriums",color: Colors.white,size: 18,)),
 
                        ),
                      ),
@@ -124,7 +168,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                            borderRadius: BorderRadius.circular(12),
 
                          ),
-                         child: Center(child: AppText(text: "View All Users",color: Colors.white,size: 10,)),
+                         child: Center(child: AppText(text: "View All Users",color: Colors.white,size: 18,)),
                        ),
                      ),
                    ),
@@ -148,7 +192,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                            borderRadius: BorderRadius.circular(12),
 
                          ),
-                         child: Center(child: AppText(text: "View All\n Payments",color: Colors.white,size: 10,)),
+                         child: Center(child: AppText(text: "View All Payments",color: Colors.white,size: 18,)),
 
                        ),
                      ),
@@ -174,7 +218,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                       onTap: (){
 
 
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllFeedbacks()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllCommonFeedbackAdmin()));
                       },
 
                       child: Container(
@@ -185,7 +229,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           borderRadius: BorderRadius.circular(12),
 
                         ),
-                        child: Center(child: AppText(text: "View All\n Feedbacks",color: Colors.white,size: 10,)),
+                        child: Center(child: AppText(text: "View All\nFeedbacks",color: Colors.white,size: 18,)),
                       ),
                     ),
                   ),
@@ -209,7 +253,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           borderRadius: BorderRadius.circular(12),
 
                         ),
-                        child: Center(child: AppText(text: "Manage\n Notifications",color: Colors.white,size: 10,)),
+                        child: Center(child: AppText(text: "Manage\n Notifications",color: Colors.white,size: 18,)),
 
                       ),
                     ),
@@ -247,7 +291,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           borderRadius: BorderRadius.circular(12),
 
                         ),
-                        child: Center(child: AppText(text: "Manage Services",color: Colors.white,size: 10,)),
+                        child: Center(child: AppText(text: "Manage Services",color: Colors.white,size: 18,)),
                       ),
                     ),
                   ),
@@ -271,7 +315,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                           borderRadius: BorderRadius.circular(12),
 
                         ),
-                        child: Center(child: AppText(text: "Manage\n Auditoriums",color: Colors.white,size: 10,)),
+                        child: Center(child: AppText(text: "Manage\nAuditoriums",color: Colors.white,size: 18,)),
 
                       ),
                     ),

@@ -39,6 +39,8 @@ class _AudProfileState extends State<AudProfile> {
   final key = GlobalKey<FormState>();
   final ImagePicker _picker = ImagePicker(); // For pick Image
   XFile? _image; // For accept Null:-?
+
+
   bool _checked1 = false;
   bool _checked2 = false;
   bool _checked3 = false;
@@ -94,7 +96,7 @@ class _AudProfileState extends State<AudProfile> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty || value.length <= 2) {
-                      return "Enter a valid  name";
+                      return "Enter a valid name";
                     }
                   },
                   controller: audnameController,
@@ -115,7 +117,7 @@ class _AudProfileState extends State<AudProfile> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty || value.length <= 2) {
-                      return "Enter a valid  Description";
+                      return "Enter a valid  Place";
                     }
                   },
                   controller: placeController,
@@ -127,12 +129,14 @@ class _AudProfileState extends State<AudProfile> {
                               BorderSide(color: Colors.black, width: 1)),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: btnColor, width: 1)),
-                      hintText: "Description",
+                      hintText: "Place",
                       hintStyle: TextStyle(color: Colors.black54)),
                 ),
+
                 SizedBox(
                   height: 20,
                 ),
+                AppText(text: "Add Images:",size: 24,),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: GestureDetector(
@@ -154,14 +158,14 @@ class _AudProfileState extends State<AudProfile> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   CircleAvatar(
-                                    radius: 45.0,
+                                    radius: 100.0,
                                     backgroundImage: NetworkImage(widget.imgurl.toString()),
                                     backgroundColor: Colors.transparent,
                                   ),
 
                                   Icon(
                                     Icons.upload_file,
-                                    size: 20,
+                                    size: 40,
                                     color: Colors.black,
                                   ),
                                 ],
@@ -177,15 +181,18 @@ class _AudProfileState extends State<AudProfile> {
                 AppText(
                   text: "Add Facilities",
                   talign: TextAlign.left,
-                  size: 18,
+                  size: 24,
                 ),
                 SizedBox(
                   height: 20,
                 ),
 
+
                 Container(
+
                     height: 150,
-                    child: GridView.builder(
+                    child:
+                    GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             crossAxisSpacing: 5,
@@ -212,9 +219,13 @@ class _AudProfileState extends State<AudProfile> {
                               }
                             },
                             child: Container(
-                              color: !selectedItemsindex!.contains(index)
-                                  ? Colors.grey
-                                  : Colors.green,
+                              decoration: BoxDecoration(
+                                color: !selectedItemsindex!.contains(index)
+                                    ? Colors.grey
+                                    : Colors.green,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+
                               height: 25,
                               width: 100,
                               child: Center(
@@ -229,8 +240,9 @@ class _AudProfileState extends State<AudProfile> {
                 Center(
                   child: InkWell(
                     onTap: () {
-
-                      selectedItems!.addAll(widget.facilities);
+print("***********************");
+print(selectedItems);
+                      widget.facilities!=null?selectedItems!.addAll(widget.facilities):null;
                       if (key.currentState!.validate()) {
                        if(_image==null){
                          FirebaseFirestore.instance
@@ -278,16 +290,16 @@ class _AudProfileState extends State<AudProfile> {
                       }
                     },
                     child: Container(
-                      height: 45,
-                      width: 250,
+                      height: 50,
+                      width: 150,
                       decoration: BoxDecoration(
                           color: btnColor,
-                          borderRadius: BorderRadius.circular(15)),
+                          borderRadius: BorderRadius.circular(12)),
                       child: Center(
                         child: AppText(
                           text: "Update",
                           color: Colors.white,
-                          size: 20,
+                          size: 24,
                         ),
                       ),
                     ),

@@ -29,9 +29,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
             indicatorColor: btnColor,
 
             tabs: [
-              Tab(icon: AppText(text: "User",color: Colors.white, size: 8)),
-              Tab(icon: AppText(text:"Auditorium", color: Colors.white,size: 8)),
-              Tab(icon: AppText(text:"Event Managers",color: Colors.white,size: 8)),
+              Tab(icon: AppText(text: "User",color: Colors.white,fw: FontWeight.bold, size: 16)),
+              Tab(icon: AppText(text:"Auditorium", color: Colors.white,fw: FontWeight.bold,size: 16)),
+              Tab(icon: AppText(text:"Event Manager",color: Colors.white,fw: FontWeight.bold,size: 16)),
 
             ],
           ),

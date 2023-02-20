@@ -1,145 +1,514 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:intl/intl.dart';
+import 'package:uuid/uuid.dart';
+import 'package:venue/constants/colors.dart';
 import 'package:venue/utilities/apptext.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+
 
 
 class DetailsPage extends StatefulWidget {
-  const DetailsPage({Key? key}) : super(key: key);
+  String? customerid;
+  String? cutomername;
+  String? customerPhone;
+  String? name;
+  String? id;
+  String? img;
+  var facility;
+  String? email;
+  String? phone;
+  String? pin;
+  String? location;
+  DetailsPage(
+      {Key? key,
+      this.cutomername,
+      this.customerPhone,
+      this.customerid,
+      this.facility,
+      this.email,
+      this.pin,
+      this.img,
+      this.name,
+      this.id,
+      this.phone,
+      this.location})
+      : super(key: key);
 
   @override
   State<DetailsPage> createState() => _DetailsPageState();
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  TextEditingController datecontroller = TextEditingController();
+  TextEditingController commentcontroller = TextEditingController();
+
+  String _date = "Not set";
+  String _time = "Not set";
+  String? time;
+  List<String> timeslots = ["Full day", "half day(Lunch)", "Half day(Dinner)"];
+
+  var _facilities = [];
+
+  String? _setTime, _setDate;
+
+  String? dateTime;
+
+  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate2 = DateTime.now();
+
+  TextEditingController _dateController = TextEditingController();
+  TextEditingController _dateController2 = TextEditingController();
+
+
+  var uuid=Uuid();
+  var docid;
+
+  @override
+  initState() {
+
+    docid=uuid.v1();
+    _facilities.addAll(widget.facility);
+    _dateController.text = DateFormat.yMd().format(DateTime.now());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
-
         height: double.infinity,
-           width: double.infinity,
-           // color: Colors.red,
-           child: SingleChildScrollView(
-             child: Column(
-               mainAxisAlignment: MainAxisAlignment.start,
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
+        width: double.infinity,
+        // color: Colors.red,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.green,
+                height: MediaQuery.of(context).size.height / 2,
+                child: Stack(
+                  children: [
+                    Container(
+                        height: MediaQuery.of(context).size.height / 2,
+                        width: MediaQuery.of(context).size.width,
+                        child: Image.network(
+                          widget.img.toString(),
+                          fit: BoxFit.cover,
+                        )),
+                    Positioned(
+                      bottom: 30,
+                      left: 20,
+                      child: Container(
+                        child: AppText(
+                          text: widget.name,
+                          color: Colors.white,
+                          size: 24,
+                          fw: FontWeight.w900,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText(
+                        text: "Contact Details",
+                        size: 20,
+                        fw: FontWeight.w500,
+                      ),
+                      SizedBox(height: 10),
+                      Card(
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          height: 85,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            UrlLauncher.launch(
+                                                'tel:+${widget.phone.toString()}');
+                                          },
+                                          child: Icon(
+                                            Icons.phone,
+                                            color: Colors.green,
+                                          )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(widget.phone.toString())
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.email,
+                                        color: Colors.green,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(widget.email.toString())
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      AppText(
+                        text: "Facilities",
+                        size: 20,
+                        fw: FontWeight.w500,
+                      ),
+                      Container(
+                          height: 50,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: _facilities.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: Chip(label: Text(_facilities[index])),
+                                );
+                              })),
+                      SizedBox(height: 10),
+                      AppText(
+                        text: "Available Packages",
+                        size: 20,
+                        fw: FontWeight.w500,
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                          height: 180,
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('packages')
+                                .where('uid', isEqualTo: widget.id)
+                                .snapshots(),
+                            builder: (_, snapshot) {
+                              if (snapshot.hasData &&
+                                  snapshot.data!.docs.length == 0) {
+                                return Center(
+                                  child: Text("No Packages Available"),
+                                );
+                              }
+
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: snapshot.data!.docs.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          elevation: 5.0,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.blue,
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            height: 150,
+                                            width: 250,
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  padding: EdgeInsets.all(20),
+                                                  decoration: BoxDecoration(
+                                                    color: btnColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                  height: 100,
+                                                  width: 250,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(snapshot.data!
+                                                                  .docs[index]
+                                                              ['title']),
+                                                          Text(snapshot.data!
+                                                                  .docs[index]
+                                                              ['description']),
+                                                        ],
+                                                      ),
+                                                      Container(
+                                                        width: 120,
+                                                        //color: Colors.red,
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            AppText(
+                                                              text:
+                                                                  "RS.${snapshot.data!.docs[index]['price']}/-",
+                                                              size: 20,
+                                                              fw: FontWeight
+                                                                  .w600,
+                                                            ),
+                                                            AppText(
+                                                              text:
+                                                                  "Offer.${snapshot.data!.docs[index]['offer']}%",
+                                                              size: 18,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 22,
+                                                ),
+                                                Center(
+                                                    child: InkWell(
+                                                        onTap: () {
+                                                          showDialog<String>(
+                                                            context: context,
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                AlertDialog(
+                                                              title: const Text(
+                                                                  'Request Send'),
+                                                              content:
+                                                                  Container(
+                                                                //color: Colors.red,
+                                                                height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height /
+                                                                    2,
+                                                                child:
+                                                                    SingleChildScrollView(
+                                                                  child: Column(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        height:
+                                                                            40,
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment.spaceBetween,
+                                                                        children: <
+                                                                            Widget>[
+
+                                                                          Expanded(
+                                                                            child:
+                                                                                Container(
+                                                                                  width: 120,
+                                                                                  child: TextFormField(
+                                                                                    style: TextStyle(fontSize: 16),
+                                                                                    enabled: false,
+                                                                                    keyboardType: TextInputType.text,
+                                                                                    controller: _dateController2,
+                                                                                    onSaved: (String? val) {
+                                                                                      _setDate = val!;
+                                                                                    },
+                                                                                    decoration: InputDecoration(
+                                                                                        disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+                                                                                     hintText: "Select Date",
+                                                                                        contentPadding: EdgeInsets.only(top: 0.0)),
+                                                                                  ),
+                                                                                ),
+                                                                          ),
+                                                                          InkWell(
+                                                                            onTap: () async {
+                                                                              var picked = await showDatePicker(context: context, initialDate: selectedDate2, initialDatePickerMode: DatePickerMode.day, firstDate: DateTime(2015), lastDate: DateTime(2101));
+                                                                              if (picked != null)
+                                                                                setState(() {
+                                                                                  selectedDate2 = picked;
+                                                                                  _dateController2.text = DateFormat.yMd().format(selectedDate2);
+                                                                                });
+                                                                            },
+
+                                                                            child: Icon(Icons.calendar_month),
+                                                                          )
+
+                                                                        ],
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      DropdownButtonFormField(
+                                                                        items: timeslots.map((String
+                                                                            time) {
+                                                                          return new DropdownMenuItem<String>(
+                                                                              value: time,
+                                                                              child: Row(
+                                                                                children: <Widget>[
+                                                                                  Text(time),
+                                                                                ],
+                                                                              ));
+                                                                        }).toList(),
+                                                                        onChanged:
+                                                                            (String?
+                                                                                value) {
+                                                                          // do other stuff with time
+                                                                          setState(() =>
+                                                                              time = value);
+                                                                        },
+                                                                        value:time,
+                                                                        decoration: InputDecoration(
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
+                                                                            hintText: 'Time Slot'),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                      TextFormField(
+                                                                        controller:
+                                                                            commentcontroller,
+                                                                        maxLines:
+                                                                            5,
+                                                                        decoration: InputDecoration(
+                                                                            enabledBorder:
+                                                                                OutlineInputBorder(),
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
+                                                                            hintText: "Comments"),
+                                                                      ),
+                                                                      SizedBox(
+                                                                        height:
+                                                                            20,
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  onPressed: () {
+
+                                                                    FirebaseFirestore.instance.collection('bookings').doc(docid).set({
 
 
-                 Container(
-                   color: Colors.green,
-                   height: MediaQuery.of(context).size.height/2,
-                   child:Stack(
-                     children: [
-                       Container(
-                           height: MediaQuery.of(context).size.height/2,
+                                                                      'bookingid':docid,
+                                                                      'bookingDate':_dateController.text,
+                                                                      'session':time,
+                                                                      'audid':widget.id,
+                                                                      'comments':commentcontroller.text,
+                                                                      'status':0,
+                                                                      'packageid':snapshot.data!.docs[index]['packageId'],
+                                                                      'reply':"",
+                                                                      'replystatus':0,
+                                                                      'customerid':widget.customerid
 
-                           child: Image.asset('assets/images/img2.jpg',fit: BoxFit.cover,)),
+                                                                    }).then((value) {
 
+                                                                      Navigator.pop(context);
+                                                                    });
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                          'OK'),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
+                                                        },
+                                                        child: AppText(
+                                                          text: "Book Now",
+                                                          color: Colors.white,
+                                                          size: 24,
+                                                          fw: FontWeight.w500,
+                                                        )))
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    });
+                              }
 
-
-                       Positioned(
-
-                         bottom: 30,
-                         left: 20,
-                         child: Container(
-                           child: AppText(text: 'Hotel Name',color: Colors.white, size: 16,fw: FontWeight.bold,),
-                         ),
-                       )
-                     ],
-                   ),
-                 ),
-
-                 Container(
-                   padding: EdgeInsets.only(left: 20,right: 20,top: 20),
-                   child: SingleChildScrollView(
-                     child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       crossAxisAlignment: CrossAxisAlignment.start,
-
-                       children: [
-
-                         AppText(text: "Description",size:12 ,fw: FontWeight.bold,),
-                         SizedBox(height: 10),
-
-                         Container(
-                           padding: EdgeInsets.only(top: 10,bottom: 10),
-                             height: 200,
-                             child:Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-                         ),
-
-                         AppText(text: "Facilities",size:12 ,fw: FontWeight.bold,),
-
-                         Container(
-                           height: 50,
-
-                           child: ListView.builder(
-                               scrollDirection: Axis.horizontal,
-                               itemCount: 5,
-                               itemBuilder: (context,index){
-
-                             return Padding(
-                               padding: const EdgeInsets.only(right: 8.0),
-                               child: Chip(label: Text("Parking")),
-                             );
-                           })
-                         ),
-                         SizedBox(height: 10),
-
-                         AppText(text: "Available Packages",size:12 ,fw: FontWeight.bold,),
-
-                         SizedBox(height: 10),
-
-                         Container(
-                           height: 150,
-
-                           child: ListView.builder(
-                               scrollDirection: Axis.horizontal,
-                               itemCount: 5,
-                               itemBuilder: (context,index){
-
-                                 return Padding(
-                                   padding: const EdgeInsets.only(right: 8.0),
-                                   child:  Container(
-
-                                     height: 150,
-                                     width: 150,
-                                     color: Colors.red,
-                                     child: Center(
-                                       child: Text("Packages"),
-                                     ),
-                                   ),
-                                 );
-                               }),
-                         ),
-
-
-
-
-
-                       ],
-                     ),
-                   ),
-                 ),
-                 SizedBox(height: 10),
-                 Center(
-                   child: Container(
-                     height: 40,
-                     width: 100,
-
-                     decoration: BoxDecoration(
-
-                         color: Colors.yellow,
-                         borderRadius: BorderRadius.circular(12)),
-                     child: Center(child: AppText(text: "Book Now",size: 8,color: Colors.black,)),
-                   ),
-                 ),
-                 SizedBox(height: 30),
-               ],
-             ),
-           ),
+                              if (snapshot.hasError) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 10),
+              Center(
+                child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    height: 45,
+                    width: 150,
+                    decoration: BoxDecoration(
+                        color: btnColor,
+                        borderRadius: BorderRadius.circular(12)),
+                    child: Center(
+                        child: AppText(
+                      text: "Book Now",
+                      size: 20,
+                      color: Colors.black,
+                      fw: FontWeight.w600,
+                    )),
+                  ),
+                ),
+              ),
+              SizedBox(height: 30),
+            ],
+          ),
+        ),
       ),
-
     );
   }
 }

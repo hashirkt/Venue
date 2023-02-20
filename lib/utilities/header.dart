@@ -25,14 +25,14 @@ class HeaderWidget extends StatelessWidget {
                 children: [
                   AppText(
                     text: "Venue",
-                    size: 22,
-                    fw: FontWeight.bold,
+                    size: 40,
+                    fw: FontWeight.w900,
                     color: Colors.white,
                   ),
                   AppText(
                     text: "Find Your Space",
-                    size: 9,
-                    fw: FontWeight.bold,
+                    size: 17,
+                    fw: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ],

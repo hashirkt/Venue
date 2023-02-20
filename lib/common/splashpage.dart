@@ -42,9 +42,9 @@ class _SplashPageState extends State<SplashPage> {
             
             Image.asset('assets/images/logo.png',height: 300,width: 300,),
             AppText(text: "Venue",
-              size: 30,
+              size: 40,
               color: Colors.white,
-              fw: FontWeight.bold,
+              fw: FontWeight.w900,
 
 
             ),

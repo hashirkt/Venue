@@ -26,6 +26,7 @@ class _UserRegistrationState extends State<UserRegistration> {
   TextEditingController confirmController = TextEditingController();
   TextEditingController placeController = TextEditingController();
   TextEditingController pinController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -45,7 +46,7 @@ class _UserRegistrationState extends State<UserRegistration> {
               HeaderWidget(),
               AppText(
                 text: "Create your Account",
-                size: 20,
+                size: 24,fw: FontWeight.w500,
                 color: Colors.white,
               ),
               SizedBox(
@@ -191,6 +192,26 @@ class _UserRegistrationState extends State<UserRegistration> {
               ),
               TextFormField(
                 validator: (value) {
+                  if (value!.isEmpty || value.length < 10) {
+                    return "Enter a valid Phone";
+                  }
+                },
+                controller: phoneController,
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white, width: 2)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: btnColor, width: 2)),
+                    hintText: "Phone",
+                    hintStyle: TextStyle(color: Colors.black54)),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                validator: (value) {
                   if (value!.isEmpty || value.length <= 2) {
                     return "Enter a valid place";
                   }
@@ -252,6 +273,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                           'pin': pinController.text,
                           'create_at': DateTime.now(),
                           'status': 1,
+                          'phone':phoneController.text,
                           'usertype': "user"
                         }).then((value) {
                           Navigator.push(
@@ -274,7 +296,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                     child: Center(
                       child: AppText(
                         text: "Register",
-                        size: 20,
+                        size: 24,
                         color: Colors.black,
                         fw: FontWeight.w700,
                       ),

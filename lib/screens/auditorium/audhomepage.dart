@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/common/loginpage.dart';
 import 'package:venue/constants/colors.dart';
+import 'package:venue/screens/auditorium/addpackages.dart';
 import 'package:venue/screens/auditorium/audbookings.dart';
 import 'package:venue/screens/auditorium/audfeedbacks.dart';
 import 'package:venue/screens/auditorium/audpayments.dart';
@@ -49,6 +51,14 @@ class _AudHomePageState extends State<AudHomePage> {
         //backgroundColor: backColor,
         appBar: AppBar(
           backgroundColor: btnColor,
+
+          actions: [
+           IconButton(onPressed:(){
+             FirebaseAuth.instance.signOut().then((value) {
+               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
+             });
+           }, icon: Icon(Icons.logout))
+          ],
         ),
         body: Container(
             height: double.infinity,
@@ -63,7 +73,7 @@ class _AudHomePageState extends State<AudHomePage> {
                   ),
                   AppText(
                     text: "Auditorium Dashboard",
-                    size: 12,
+                    size: 26,
                   ),
                   SizedBox(
                     height: 20,
@@ -78,7 +88,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AudBookings()));
+                                      builder: (context) =>ViewAllAudBooking(
+                                        id: widget.id,
+                                      )));
                             },
                             child: Container(
                               height: 100,
@@ -89,9 +101,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               ),
                               child: Center(
                                   child: AppText(
-                                text: "View All\n Bookings",
+                                text: "View All Bookings",
                                 color: Colors.white,
-                                size: 9,
+                                size: 18,
                               )),
                             ),
                           ),
@@ -105,7 +117,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AudServices()));
+                                      builder: (context) => AddPackages(
+                                        id:widget.id
+                                      )));
                             },
                             child: Container(
                               height: 100,
@@ -116,9 +130,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               ),
                               child: Center(
                                   child: AppText(
-                                text: "Manage Services",
+                                text: "Manage Services\n & Packages",
                                 color: Colors.white,
-                                size: 9,
+                                size: 18,
                               )),
                             ),
                           ),
@@ -150,9 +164,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               ),
                               child: Center(
                                   child: AppText(
-                                text: "View All\n Feedbacks",
+                                text: "View All\nFeedbacks",
                                 color: Colors.white,
-                                size: 9,
+                                size: 18,
                               )),
                             ),
                           ),
@@ -177,9 +191,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               ),
                               child: Center(
                                   child: AppText(
-                                text: "View All\n Payments",
+                                text: "View All\nPayments",
                                 color: Colors.white,
-                                size: 9,
+                                size: 18,
                               )),
                             ),
                           ),
@@ -213,7 +227,7 @@ facilities: widget.facility,
                             },
                             child: Container(
                               height: 100,
-                              width: 170,
+                              width: 300,
                               decoration: BoxDecoration(
                                 color: backColor,
                                 borderRadius: BorderRadius.circular(12),
@@ -222,7 +236,7 @@ facilities: widget.facility,
                                   child: AppText(
                                 text: "Edit/Update Profile",
                                 color: Colors.white,
-                                size: 9,
+                                size: 18,
                               )),
                             ),
                           ),

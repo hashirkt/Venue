@@ -1,6 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:venue/constants/colors.dart';
+import 'package:venue/screens/user/addfeedbacks.dart';
+import 'package:venue/screens/user/callbackrequest.dart';
+import 'package:venue/screens/user/commonfeedbackadmin.dart';
 import 'package:venue/screens/user/homepage.dart';
+import 'package:venue/screens/user/vieprofile_.dart';
+import 'package:venue/screens/user/viewallordersusers.dart';
+import 'package:venue/screens/user/viewprofile.dart';
+import 'package:venue/utilities/apptext.dart';
 
 class BottomNavigationPage extends StatefulWidget {
   var email;
@@ -9,7 +18,19 @@ class BottomNavigationPage extends StatefulWidget {
   var pin;
   var place;
   var id;
-  BottomNavigationPage({Key? key,this.email,this.fname,this.lname,this.pin,this.place,this.id}) : super(key: key);
+  var phone;
+  String? img;
+  BottomNavigationPage(
+      {Key? key,
+      this.phone,
+      this.email,
+      this.fname,
+      this.lname,
+      this.pin,
+      this.place,
+      this.id,
+      this.img})
+      : super(key: key);
 
   @override
   State<BottomNavigationPage> createState() => _BottomNavigationPageState();
@@ -23,26 +44,56 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   var pin;
   var place;
   var id;
-  SetData(){
+  var phone;
+  var img;
 
-    email=widget.email;
-    fname=widget.fname;
-    lname=widget.lname;
-    pin=widget.pin;
-    place=widget.place;
-    id=widget.id;
+  var imgurl;
+  getdata() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    imgurl = _pref.getString('img');
   }
 
-  List<Widget> _widgetOptions = [
+  SetData() {
+    email = widget.email;
+    fname = widget.fname;
+    lname = widget.lname;
+    pin = widget.pin;
+    place = widget.place;
+    id = widget.id;
+    phone = widget.phone;
+    img = widget.img;
+  }
 
-  ];
+  List<Widget> _widgetOptions = [];
   @override
-  initState(){
-   SetData();
-   _widgetOptions=[HomePage(email: email,fname: fname,lname: lname,pin: pin,place: place,id: id,),
-     Text("Orders"),
-     Text("Profile"),
-     Text("Favourites")];
+  initState() {
+    getdata();
+    SetData();
+    _widgetOptions = [
+      HomePage(
+        email: email,
+        fname: fname,
+        lname: lname,
+        pin: pin,
+        place: place,
+        id: id,
+        phone: phone,
+        imgurl_pref: img,
+      ),
+    ViewAllOrdersUser(id: widget.id,),
+     ViewProfile_bottom(
+       email: email,
+       fname: fname,
+       lname: lname,
+       pin: pin,
+       place: place,
+       uid: id,
+       phone: phone,
+       imgurl: img,
+
+     ),
+      Text("Favourites")
+    ];
     super.initState();
   }
 
@@ -50,10 +101,121 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: backColor),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewProfile(
+                                        uid: widget.id,
+                                        fname: widget.fname,
+                                        lname: widget.lname,
+                                        place: widget.place,
+                                        pin: widget.pin,
+                                        phone: widget.phone,
+                                      )));
+                        },
+                        child: imgurl != null
+                            ? Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: btnColor,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image:
+                                            NetworkImage(imgurl.toString()))),
+                              )
+                            : Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    color: btnColor,
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/user1.jpg'))),
+                              ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(widget.fname, style: TextStyle(color: Colors.white))
+                    ],
+                  )
+                ],
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewCAllbackRequest(
+                              id: widget.id,
+                            )));
+              },
+              title: AppText(
+                text: "View Requests",
+                size: 18,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddFeedBack(
+                          id: widget.id,
+                          phone: widget.phone,
+                          name: widget.fname,
+                        )));
+              },
+              title: AppText(
+                text: "Add Feedback",
+                size: 18,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewAllCommonFeedbackUser(
+                          id: widget.id,
+
+                        )));
+              },
+              title: AppText(
+                text: "Feedback History",
+                size: 18,
+              ),
+            )
+          ],
+        ),
+      ),
       backgroundColor: backColor,
       appBar: AppBar(
         backgroundColor: btnColor,
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/login", (Route<dynamic> route) => false));
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: btnColor,

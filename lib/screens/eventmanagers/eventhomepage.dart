@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/admin/AllEventManagers.dart';
 import 'package:venue/admin/manageauditoriums.dart';
@@ -7,6 +8,7 @@ import 'package:venue/admin/viewallauditorium.dart';
 import 'package:venue/admin/viewallfeedbacks.dart';
 import 'package:venue/admin/viewallpayments.dart';
 import 'package:venue/admin/viewallusers.dart';
+import 'package:venue/common/loginpage.dart';
 import 'package:venue/constants/colors.dart';
 import 'package:venue/screens/eventmanagers/eventbookings.dart';
 import 'package:venue/screens/eventmanagers/eventfeedbacks.dart';
@@ -35,6 +37,13 @@ class _EventHomePageState extends State<EventHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: btnColor,
+        actions: [
+          IconButton(onPressed:(){
+            FirebaseAuth.instance.signOut().then((value) {
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
+            });
+          }, icon: Icon(Icons.logout))
+        ],
       ),
       body: Container(
         height: double.infinity,
@@ -46,7 +55,7 @@ class _EventHomePageState extends State<EventHomePage> {
           children: [
             AppText(
               text: "Event Managers Dashboard",
-              size: 12,
+              size: 26,
             ),
             SizedBox(
               height: 10,
@@ -61,7 +70,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EventBookings()));
+                                builder: (context) => ViewAllEventBooking()));
                       },
                       child: Container(
                         height: 100,
@@ -72,9 +81,9 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\n Bookings",
+                          text: "View All Bookings",
                           color: Colors.white,
-                          size: 10,
+                          size: 18,
                         )),
                       ),
                     ),
@@ -94,6 +103,7 @@ class _EventHomePageState extends State<EventHomePage> {
                                   place: widget.place,
                                   phoneno: widget.phoneno,
                                   pin: widget.pin,
+                                  eventname: widget.eventname,
 
                                 )));
                       },
@@ -108,7 +118,7 @@ class _EventHomePageState extends State<EventHomePage> {
                             child: AppText(
                           text: "Manage Services",
                           color: Colors.white,
-                          size: 10,
+                          size: 18,
                         )),
                       ),
                     ),
@@ -140,9 +150,9 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\n Feedbacks",
+                          text: "View All\nFeedbacks",
                           color: Colors.white,
-                          size: 10,
+                          size: 18,
                         )),
                       ),
                     ),
@@ -167,9 +177,9 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\n Payments",
+                          text: "View All\nPayments",
                           color: Colors.white,
-                          size: 10,
+                          size: 18,
                         )),
                       ),
                     ),

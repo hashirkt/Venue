@@ -104,7 +104,8 @@ var serviceid;
                       'place':widget.place,
                       'phone':widget.phoneno,
                       'pin':widget.pin,
-                      'eventmanagerid':widget.id
+                      'eventmanagerid':widget.id,
+                      'eventname':widget.eventname
                     }).then((value) {
 
                       setState((){
@@ -143,7 +144,7 @@ var serviceid;
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              AppText(text: "View All Services",size: 14,),
+              AppText(text: "View All Services",size: 24,),
               SizedBox(height: 20,),
 
               Container(
@@ -197,8 +198,8 @@ var serviceid;
 
                                         icon: Icon(Icons.arrow_forward_ios),
                                       ),
-                                      title: AppText(text: snapshot.data!.docs[index]['title'],size: 12,),
-                                      subtitle: AppText(text:  snapshot.data!.docs[index]['description'],size: 10,),
+                                      title: AppText(text: snapshot.data!.docs[index]['title'],size: 18,),
+                                      subtitle: AppText(text:  snapshot.data!.docs[index]['description'],size: 16,),
                                     ),
                                   ),
                                 ),

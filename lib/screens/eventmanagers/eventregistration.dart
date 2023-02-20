@@ -48,7 +48,7 @@ class _EventRegistrationState extends State<EventRegistration> {
             children: [
 
               HeaderWidget(),
-              AppText(text: "Create your Account",size: 10,
+              AppText(text: "Create your Account",size: 24,fw: FontWeight.w500,
                 color: Colors.white,),
               SizedBox(height: 20,),
               TextFormField(
@@ -317,7 +317,7 @@ class _EventRegistrationState extends State<EventRegistration> {
                     child: Center(
                       child: AppText(
                         text: "Register",
-                        size: 10,
+                        size: 24,
                         color: Colors.black,
                         fw: FontWeight.w700,
                       ),

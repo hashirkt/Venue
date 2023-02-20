@@ -29,7 +29,7 @@ class _ViewAllPaymentsState extends State<ViewAllPayments> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              AppText(text: "View All Payments"),
+              AppText(text: "View All Payments",size: 24,),
               SizedBox(height: 20,),
 
               Container(
@@ -62,8 +62,8 @@ class _ViewAllPaymentsState extends State<ViewAllPayments> {
 
                                   icon: Icon(Icons.arrow_forward_ios),
                                 ),
-                                title: AppText(text: "Event 1"),
-                                subtitle: AppText(text: "Payment Report",),
+                                title: AppText(text: "Event 1",size: 18,),
+                                subtitle: AppText(text: "Payment Report",size: 16,),
                               ),
                             ),
                           ),

@@ -51,7 +51,7 @@ class _EventServiceDetailsState extends State<EventServiceDetails> {
               crossAxisAlignment:CrossAxisAlignment.start,
               children: [
 
-                AppText(text: "Service Details"),
+                AppText(text: "Service Details",size: 24,),
 SizedBox(height: 30,),
                 TextFormField(
                   controller: eventserviceController,
@@ -60,7 +60,7 @@ SizedBox(height: 30,),
                   ),
                 ),
                 TextFormField(
-                  maxLines: 10,
+                  maxLines: 5,
                   controller: eventservicedetailsController,
                   decoration: InputDecoration(
                       hintText: "Service Details"
@@ -86,15 +86,17 @@ SizedBox(height: 30,),
                     }).then((value) =>Navigator.pop(context));
 
                   },
-                  child: Container(
-                    height: 45,
-                    width: 250,
-                    decoration: BoxDecoration(
-                      color: btnColor,
-                      borderRadius: BorderRadius.circular(15)
-                    ),
-                    child: Center(
-                      child: AppText(text: "Update",color: Colors.white,size: 16,),
+                  child: Center(
+                    child: Container(
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: btnColor,
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+                      child: Center(
+                        child: AppText(text: "Update",color: Colors.white,size: 20,fw: FontWeight.w700,),
+                      ),
                     ),
                   ),
                 )

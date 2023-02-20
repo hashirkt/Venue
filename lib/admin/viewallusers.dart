@@ -29,7 +29,7 @@ class _ViewAllUsersState extends State<ViewAllUsers> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              AppText(text: "View All Users"),
+              AppText(text: "View All Users",size: 24,),
               SizedBox(height: 20,),
 
               Container(
@@ -62,8 +62,8 @@ class _ViewAllUsersState extends State<ViewAllUsers> {
 
                                   icon: Icon(Icons.arrow_forward_ios),
                                 ),
-                                title: AppText(text: "Event 1"),
-                                subtitle: AppText(text: "Phone number",),
+                                title: AppText(text: "Event 1",size: 18,),
+                                subtitle: AppText(text: "Phone number",size: 16,),
                               ),
                             ),
                           ),

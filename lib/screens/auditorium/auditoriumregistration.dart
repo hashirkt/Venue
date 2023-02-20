@@ -48,7 +48,7 @@ class _AuditoriumRegistrationState extends State<AuditoriumRegistration > {
             children: [
 
               HeaderWidget(),
-              AppText(text: "Create your Account",size: 10,
+              AppText(text: "Create your Account",size: 24,fw: FontWeight.w500,
               color: Colors.white,),
               SizedBox(height: 20,),
               TextFormField(
@@ -295,7 +295,7 @@ class _AuditoriumRegistrationState extends State<AuditoriumRegistration > {
                           'status': 1,
                           'usertype': "auditorium",
                           'img':null,
-                          'facilities':null,
+                          'facilities':[],
 
                         }).then((value) {
                           Navigator.push(
@@ -321,7 +321,7 @@ class _AuditoriumRegistrationState extends State<AuditoriumRegistration > {
                     child: Center(
                       child: AppText(
                         text: "Register",
-                        size: 10,
+                        size: 24,
                         color: Colors.black,
                         fw: FontWeight.w700,
                       ),

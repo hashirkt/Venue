@@ -86,7 +86,7 @@ class _ManageAuditoriumsState extends State<ManageAuditoriums> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              AppText(text: "View All Auditoriums"),
+              AppText(text: "View All Auditoriums",size: 24,),
               SizedBox(height: 20,),
 
               Container(
@@ -119,8 +119,8 @@ class _ManageAuditoriumsState extends State<ManageAuditoriums> {
 
                                   icon: Icon(Icons.arrow_forward_ios),
                                 ),
-                                title: AppText(text: "Event 1"),
-                                subtitle: AppText(text: "Details",),
+                                title: AppText(text: "Event 1",size: 18,),
+                                subtitle: AppText(text: "Details",size: 16,),
                               ),
                             ),
                           ),
