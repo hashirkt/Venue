@@ -11,7 +11,8 @@ class ViewAllEventServiceUSer extends StatefulWidget {
   String?customerid;
   String?cutomername;
   String?customerPhone;
-  ViewAllEventServiceUSer({Key? key,this.cutomername,this.customerid,this.customerPhone}) : super(key: key);
+  String?title;
+  ViewAllEventServiceUSer({Key? key,this.cutomername,this.customerid,this.customerPhone,this.title}) : super(key: key);
 
   @override
   State<ViewAllEventServiceUSer> createState() => _ViewAllEventServiceUSerState();
@@ -48,7 +49,7 @@ class _ViewAllEventServiceUSerState extends State<ViewAllEventServiceUSer> {
                     stream: FirebaseFirestore.instance
                         .collection('eventservice')
 
-                        .where('status', isEqualTo: 1)
+                        .where('status', isEqualTo: 1).where('title',isEqualTo: widget.title)
                         .snapshots(),
                     builder: (context, snapshot) {
                       return ListView.builder(

@@ -289,13 +289,13 @@ class _DetailsPageState extends State<DetailsPage> {
                                                               fw: FontWeight
                                                                   .w600,
                                                             ),
-                                                            AppText(
+                                                            snapshot.data!.docs[index]['offer']!="0" ?    AppText(
                                                               text:
                                                                   "Offer.${snapshot.data!.docs[index]['offer']}%",
                                                               size: 18,
                                                               color:
                                                                   Colors.white,
-                                                            ),
+                                                            ):SizedBox(),
                                                           ],
                                                         ),
                                                       )
@@ -431,7 +431,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
                                                                     FirebaseFirestore.instance.collection('bookings').doc(docid).set({
 
-
+'audname':widget.name,
                                                                       'bookingid':docid,
                                                                       'bookingDate':_dateController.text,
                                                                       'session':time,
@@ -441,7 +441,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                       'packageid':snapshot.data!.docs[index]['packageId'],
                                                                       'reply':"",
                                                                       'replystatus':0,
-                                                                      'customerid':widget.customerid
+                                                                      'customerid':widget.customerid,
+
+                                                                      'paymentstatus':0,
+                                                                      'paymentamount':snapshot.data!.docs[index]['price']
 
                                                                     }).then((value) {
 
@@ -485,26 +488,26 @@ class _DetailsPageState extends State<DetailsPage> {
                 ),
               ),
               SizedBox(height: 10),
-              Center(
-                child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    height: 45,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: btnColor,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Center(
-                        child: AppText(
-                      text: "Book Now",
-                      size: 20,
-                      color: Colors.black,
-                      fw: FontWeight.w600,
-                    )),
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
+              // Center(
+              //   child: InkWell(
+              //     onTap: () {},
+              //     child: Container(
+              //       height: 45,
+              //       width: 150,
+              //       decoration: BoxDecoration(
+              //           color: btnColor,
+              //           borderRadius: BorderRadius.circular(12)),
+              //       child: Center(
+              //           child: AppText(
+              //         text: "Book Now",
+              //         size: 20,
+              //         color: Colors.black,
+              //         fw: FontWeight.w600,
+              //       )),
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(height: 30),
             ],
           ),
         ),

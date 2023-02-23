@@ -343,7 +343,9 @@ var imgurl;
 
                           onTap: (){
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer(
+                              title: "Photography",
+                            )));
                           },
                           child: Text(
                             "View all",
@@ -390,7 +392,7 @@ var imgurl;
                                                 builder: (context) =>
                                                     ServiceDetailsScreenUser(
 
-
+eventname: snapshot.data!.docs[index]['eventname'],
                                                       id: snapshot.data!.docs[index]['id'],
                                                       title: snapshot.data!.docs[index]['title'],
                                                       description: snapshot.data!.docs[index]['description'],
@@ -532,7 +534,7 @@ var imgurl;
 
                           onTap: (){
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer(title: "Catering Service",)));
                           },
                           child: Text(
                             "View all",
@@ -572,7 +574,7 @@ var imgurl;
                                            MaterialPageRoute(
                                                builder: (context) =>
                                                    ServiceDetailsScreenUser(
-
+                                                     eventname: snapshot.data!.docs[index]['eventname'],
                                                      id: snapshot.data!.docs[index]['id'],
                                                      title: snapshot.data!.docs[index]['title'],
                                                      description: snapshot.data!.docs[index]['description'],
@@ -719,7 +721,9 @@ var imgurl;
 
                           onTap: (){
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllEventServiceUSer(
+title: "Event Decoration",
+                            )));
                           },
                           child: Text(
                             "View all",
@@ -761,6 +765,7 @@ var imgurl;
                                                       phone: snapshot.data!.docs[index]['phone'],
                                                       pin: snapshot.data!.docs[index]['pin'],
                                                       location: snapshot.data!.docs[index]['place'],
+                                                      eventname: snapshot.data!.docs[index]['eventname'],
                                                       customerid: widget.id,
                                                       customerPhone: widget.phone,
                                                       cutomername: widget.fname,

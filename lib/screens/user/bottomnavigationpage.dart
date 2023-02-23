@@ -80,18 +80,26 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         phone: phone,
         imgurl_pref: img,
       ),
-    ViewAllOrdersUser(id: widget.id,),
-     ViewProfile_bottom(
-       email: email,
-       fname: fname,
-       lname: lname,
-       pin: pin,
-       place: place,
-       uid: id,
-       phone: phone,
-       imgurl: img,
-
-     ),
+      ViewAllOrdersUser(
+        email: email,
+        fname: fname,
+        lname: lname,
+        pin: pin,
+        place: place,
+        id: id,
+        phone: phone,
+        imgurl_pref: img,
+      ),
+      ViewProfile_bottom(
+        email: email,
+        fname: fname,
+        lname: lname,
+        pin: pin,
+        place: place,
+        uid: id,
+        phone: phone,
+        imgurl: img,
+      ),
       Text("Favourites")
     ];
     super.initState();
@@ -176,10 +184,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => AddFeedBack(
-                          id: widget.id,
-                          phone: widget.phone,
-                          name: widget.fname,
-                        )));
+                              id: widget.id,
+                              phone: widget.phone,
+                              name: widget.fname,
+                            )));
               },
               title: AppText(
                 text: "Add Feedback",
@@ -192,9 +200,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => ViewAllCommonFeedbackUser(
-                          id: widget.id,
-
-                        )));
+                              id: widget.id,
+                            )));
               },
               title: AppText(
                 text: "Feedback History",
@@ -210,9 +217,32 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         actions: [
           IconButton(
               onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, "/login", (Route<dynamic> route) => false));
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Sign Out"),
+                        content: Container(
+                          child: Text("Do You Really want to  log out"),
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                FirebaseAuth.instance.signOut().then((value) =>
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        "/login",
+                                        (Route<dynamic> route) => false));
+                              },
+                              child: Text("Yes")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("No"))
+                        ],
+                      );
+                    });
               },
               icon: Icon(Icons.logout))
         ],

@@ -74,7 +74,7 @@ class _ViewCAllbackRequestState extends State<ViewCAllbackRequest> {
 
                                         icon: Icon(Icons.arrow_forward_ios),
                                       ),
-                                      title: AppText(text: snapshot.data!.docs[index]['callbackid'],size: 16,
+                                      title: AppText(text: snapshot.data!.docs[index]['eventname'],size: 16,
                                       ),
                                       subtitle: AppText(text:date.toString() ),
                                     ),

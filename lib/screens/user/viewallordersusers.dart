@@ -1,28 +1,68 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/constants/colors.dart';
+import 'package:venue/screens/user/paymentpage.dart';
 import 'package:venue/utilities/apptext.dart';
 
 class ViewAllOrdersUser extends StatefulWidget {
-  String? id;
-  ViewAllOrdersUser({Key? key, this.id}) : super(key: key);
+  var email;
+  var fname;
+  var lname;
+  var pin;
+  var place;
+  var id;
+  var phone;
+  String? imgurl_pref;
 
+  ViewAllOrdersUser(
+      {Key? key,
+      this.email,
+      this.phone,
+      this.fname,
+      this.lname,
+      this.pin,
+      this.imgurl_pref,
+      this.place,
+      this.id})
+      : super(key: key);
   @override
   State<ViewAllOrdersUser> createState() => _ViewAllOrdersUserState();
 }
 
-class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTickerProviderStateMixin {
+class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
+    with SingleTickerProviderStateMixin {
+  var email;
+  var fname;
+  var lname;
+  var pin;
+  var place;
+  var id;
+  var phone;
+  var img;
+
+  var imgurl;
+  setData() {
+    email = widget.email;
+    fname = widget.fname;
+    lname = widget.lname;
+    pin = widget.pin;
+    place = widget.place;
+    id = widget.id;
+    phone = widget.phone;
+    img = widget.imgurl_pref;
+  }
+
   TabController? _tabController;
 
   @override
   void initState() {
+    setData();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -32,13 +72,11 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
             height: 45,
             decoration: BoxDecoration(
               color: Colors.grey[300],
-
             ),
             child: TabBar(
               controller: _tabController,
               // give the indicator a decoration (color and border radius)
               indicator: BoxDecoration(
-
                 color: Colors.green,
               ),
               labelColor: Colors.white,
@@ -102,47 +140,48 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                                             child: Stack(
                                               children: [
                                                 Align(
-                                                  alignment: Alignment(0.0, 0.0),
+                                                  alignment:
+                                                      Alignment(0.0, 0.0),
                                                   child: Card(
                                                     elevation: 5.0,
                                                     child: Container(
-                                                      //color: Colors.red,
+                                                        //color: Colors.red,
                                                         height: 150,
-                                                        width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
                                                         child: Stack(
                                                           children: [
                                                             Align(
                                                               alignment:
-                                                              Alignment(
-                                                                  -0.9, 0.0),
+                                                                  Alignment(
+                                                                      -0.9,
+                                                                      0.0),
                                                               child: Container(
                                                                   padding:
-                                                                  EdgeInsets
-                                                                      .all(
-                                                                      10),
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              10),
                                                                   //color: Colors.grey,
                                                                   width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width -
+                                                                              context)
+                                                                          .size
+                                                                          .width -
                                                                       160,
                                                                   height: 180,
                                                                   child: Column(
                                                                     mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                        MainAxisAlignment
+                                                                            .center,
                                                                     crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
-                                                                        [
-                                                                        'session'],
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'session'],
                                                                         color: Colors
                                                                             .black87,
                                                                       ),
@@ -154,47 +193,47 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                                                                       //   size: 12,
                                                                       // ),
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
-                                                                        [
-                                                                        'comment'],
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'comment'],
                                                                         color: Colors
                                                                             .black45,
-                                                                        size: 12,
+                                                                        size:
+                                                                            12,
                                                                       ),
 
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
-                                                                        [
-                                                                        'date'],
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'date'],
                                                                         color: Colors
                                                                             .black45,
-                                                                        size: 12,
+                                                                        size:
+                                                                            12,
                                                                       ),
                                                                       Container(
                                                                           height:
-                                                                          40,
+                                                                              40,
                                                                           width: MediaQuery.of(context).size.width -
                                                                               160,
                                                                           child:
-                                                                          Row(
+                                                                              Row(
                                                                             mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
+                                                                                MainAxisAlignment.spaceBetween,
                                                                             children: [
                                                                               feed[index]['callstatus'] == 1
                                                                                   ? AppText(
-                                                                                text: "Contacted",
-                                                                                size: 16,
-                                                                                fw: FontWeight.w700,
-                                                                                color: Colors.green,
-                                                                              )
+                                                                                      text: "Contacted",
+                                                                                      size: 16,
+                                                                                      fw: FontWeight.w700,
+                                                                                      color: Colors.green,
+                                                                                    )
                                                                                   : AppText(
-                                                                                text: "Pending",
-                                                                                size: 16,
-                                                                                fw: FontWeight.w700,
-                                                                                color: Colors.red,
-                                                                              ),
+                                                                                      text: "Pending",
+                                                                                      size: 16,
+                                                                                      fw: FontWeight.w700,
+                                                                                      color: Colors.red,
+                                                                                    ),
                                                                             ],
                                                                           )),
                                                                     ],
@@ -218,7 +257,6 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                                                         )),
                                                   ),
                                                 ),
-
                                               ],
                                             ),
                                           ),
@@ -244,8 +282,8 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(
-                          text: "All Feedbacks",
-                          color: Colors.black87,
+                          text: "All Bookings",
+                          color: btnColor,
                           size: 18,
                         ),
                         SizedBox(
@@ -275,92 +313,129 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                                             child: Stack(
                                               children: [
                                                 Align(
-                                                  alignment: Alignment(0.0, 0.0),
+                                                  alignment:
+                                                      Alignment(0.0, 0.0),
                                                   child: Card(
                                                     elevation: 5.0,
                                                     child: Container(
-                                                      //color: Colors.red,
+                                                        //color: Colors.red,
                                                         height: 150,
-                                                        width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
                                                         child: Stack(
                                                           children: [
                                                             Align(
                                                               alignment:
-                                                              Alignment(
-                                                                  -0.9, 0.0),
+                                                                  Alignment(
+                                                                      -0.9,
+                                                                      0.0),
                                                               child: Container(
                                                                   padding:
-                                                                  EdgeInsets
-                                                                      .all(
-                                                                      10),
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              10),
                                                                   //color: Colors.grey,
                                                                   width: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .width -
+                                                                              context)
+                                                                          .size
+                                                                          .width -
                                                                       160,
                                                                   height: 180,
                                                                   child: Column(
                                                                     mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                        MainAxisAlignment
+                                                                            .center,
                                                                     crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                        CrossAxisAlignment
+                                                                            .start,
                                                                     children: [
+
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
+                                                                        text: feed[index]
                                                                         [
-                                                                        'session'],
+                                                                        'audname'],
                                                                         color: Colors
                                                                             .black87,
                                                                       ),
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
-                                                                        [
-                                                                        'comments'],
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'bookingDate'],
                                                                         color: Colors
-                                                                            .black45,
-                                                                        size: 12,
+                                                                            .black87,
+                                                                        size: 18,
                                                                       ),
                                                                       AppText(
-                                                                        text: feed[
-                                                                        index]
-                                                                        [
-                                                                        'bookingDate'],
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'comments'],
                                                                         color: Colors
                                                                             .black45,
-                                                                        size: 12,
+                                                                        size:
+                                                                            12,
+                                                                      ),
+                                                                      AppText(
+                                                                        text: feed[index]
+                                                                            [
+                                                                            'session'],
+                                                                        color: Colors
+                                                                            .black45,
+                                                                        size:
+                                                                            12,
                                                                       ),
                                                                       Container(
                                                                           height:
-                                                                          40,
+                                                                              40,
                                                                           width: MediaQuery.of(context).size.width -
                                                                               160,
                                                                           child:
-                                                                          Row(
+                                                                              Row(
                                                                             mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
+                                                                                MainAxisAlignment.spaceBetween,
                                                                             children: [
                                                                               feed[index]['replystatus'] == 1
                                                                                   ? AppText(
-                                                                                text: "Replied",
-                                                                                size: 16,
-                                                                                fw: FontWeight.w700,
-                                                                                color: Colors.green,
-                                                                              )
+                                                                                      text: "Replied",
+                                                                                      size: 16,
+                                                                                      fw: FontWeight.w700,
+                                                                                      color: Colors.green,
+                                                                                    )
                                                                                   : AppText(
-                                                                                text: "Not Replied",
-                                                                                size: 16,
-                                                                                fw: FontWeight.w700,
-                                                                                color: Colors.red,
-                                                                              ),
-
+                                                                                      text: "Not Replied",
+                                                                                      size: 16,
+                                                                                      fw: FontWeight.w700,
+                                                                                      color: Colors.red,
+                                                                                    ),
+                                                                              feed[index]['replystatus'] == 1
+                                                                                  ? InkWell(
+                                                                                      onTap: () {
+                                                                                        Navigator.push(
+                                                                                          context,
+                                                                                          MaterialPageRoute(
+                                                                                            builder: (context) => CrediCardClass(
+                                                                                              email: email,
+                                                                                              fname: fname,
+                                                                                              lname: lname,
+                                                                                              pin: pin,
+                                                                                              place: place,
+                                                                                              id: id,
+                                                                                              phone: phone,
+                                                                                              imgurl_pref: img,
+                                                                                              item: snapshot.data!.docs[index],
+                                                                                            ),
+                                                                                          ),
+                                                                                        );
+                                                                                      },
+                                                                                      child: AppText(
+                                                                                        text: "Pay Now",
+                                                                                        size: 16,
+                                                                                        fw: FontWeight.w700,
+                                                                                        color: Colors.green,
+                                                                                      ),
+                                                                                    )
+                                                                                  : SizedBox(),
                                                                             ],
                                                                           )),
                                                                     ],
@@ -384,7 +459,6 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                                                         )),
                                                   ),
                                                 ),
-
                                               ],
                                             ),
                                           ),
@@ -402,15 +476,10 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>  with SingleTicke
                   ),
                 ),
               ],
-
-
             ),
           ),
         ],
       ),
     );
-
-
-
   }
 }

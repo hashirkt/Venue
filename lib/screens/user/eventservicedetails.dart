@@ -11,6 +11,7 @@ class ServiceDetailsScreenUser extends StatefulWidget {
   String?title;
   String?id;
   String?eventmanagerid;
+  String?eventname;
 String?description;
 String?customerid;
 String?cutomername;
@@ -18,7 +19,7 @@ String?customerPhone;
   String?phone;
   String?pin;
   String?location;
-  ServiceDetailsScreenUser({Key? key,this.eventmanagerid,this.customerid,this.customerPhone,this.cutomername,this.pin,this.title,this.id,this.phone,this.location,this.description}) : super(key: key);
+  ServiceDetailsScreenUser({Key? key,this.eventmanagerid,this.eventname,this.customerid,this.customerPhone,this.cutomername,this.pin,this.title,this.id,this.phone,this.location,this.description}) : super(key: key);
 
   @override
   State<ServiceDetailsScreenUser> createState() => _ServiceDetailsScreenUserState();
@@ -277,7 +278,7 @@ callbackid=uuid.v1();
                               TextButton(
                                 onPressed: () {
                                   FirebaseFirestore.instance.collection('servicecallback').doc(callbackid).set({
-
+'eventname':widget.eventname,
                                     'callbackid':callbackid,
                                     'customerphone':widget.phone,
                                     'customerid':widget.customerid,
