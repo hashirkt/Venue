@@ -25,11 +25,11 @@ class AudHomePage extends StatefulWidget {
   AudHomePage(
       {Key? key,
       this.email,
-        this.facility,
+      this.facility,
       this.audname,
       this.phoneno,
       this.place,
-        this.imgurl,
+      this.imgurl,
       this.pin,
       this.id})
       : super(key: key);
@@ -46,18 +46,42 @@ class _AudHomePageState extends State<AudHomePage> {
     print(widget.id);
     print(widget.place);
 
-
     return Scaffold(
         //backgroundColor: backColor,
         appBar: AppBar(
           backgroundColor: btnColor,
-
           actions: [
-           IconButton(onPressed:(){
-             FirebaseAuth.instance.signOut().then((value) {
-               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
-             });
-           }, icon: Icon(Icons.logout))
+            IconButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text("Sign Out"),
+                          content: Container(
+                            child: Text("Do You Really want to  log out"),
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  FirebaseAuth.instance.signOut().then(
+                                      (value) =>
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              "/login",
+                                              (Route<dynamic> route) => false));
+                                },
+                                child: Text("Yes")),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("No"))
+                          ],
+                        );
+                      });
+                },
+                icon: Icon(Icons.logout))
           ],
         ),
         body: Container(
@@ -68,9 +92,19 @@ class _AudHomePageState extends State<AudHomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
+
+                  AppText(
+                    text: "Welcome ${widget.audname}",
+                    size: 28,
+                    fw: FontWeight.w800,
+                    color: backColor,
+                  ),
+
                   SizedBox(
                     height: 20,
                   ),
+
                   AppText(
                     text: "Auditorium Dashboard",
                     size: 26,
@@ -88,9 +122,9 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>ViewAllAudBooking(
-                                        id: widget.id,
-                                      )));
+                                      builder: (context) => ViewAllAudBooking(
+                                            id: widget.id,
+                                          )));
                             },
                             child: Container(
                               height: 100,
@@ -117,9 +151,8 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AddPackages(
-                                        id:widget.id
-                                      )));
+                                      builder: (context) =>
+                                          AddPackages(id: widget.id)));
                             },
                             child: Container(
                               height: 100,
@@ -215,15 +248,15 @@ class _AudHomePageState extends State<AudHomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AudProfile(
-facilities: widget.facility,
-                                        id: widget.id,
-                                        email: widget.email,
-                                        audname: widget.audname,
-                                          place: widget.place,
-                                        pin: widget.pin,
-                                        phoneno: widget.phoneno,
-                                        imgurl: widget.imgurl,
-                                      )));
+                                            facilities: widget.facility,
+                                            id: widget.id,
+                                            email: widget.email,
+                                            audname: widget.audname,
+                                            place: widget.place,
+                                            pin: widget.pin,
+                                            phoneno: widget.phoneno,
+                                            imgurl: widget.imgurl,
+                                          )));
                             },
                             child: Container(
                               height: 100,
@@ -250,9 +283,6 @@ facilities: widget.facility,
                       ],
                     ),
                   ),
-                ]
-            )
-        )
-    );
+                ])));
   }
 }

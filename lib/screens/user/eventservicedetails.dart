@@ -19,7 +19,8 @@ String?customerPhone;
   String?phone;
   String?pin;
   String?location;
-  ServiceDetailsScreenUser({Key? key,this.eventmanagerid,this.eventname,this.customerid,this.customerPhone,this.cutomername,this.pin,this.title,this.id,this.phone,this.location,this.description}) : super(key: key);
+  String? imgurl;
+  ServiceDetailsScreenUser({Key? key,this.imgurl,this.eventmanagerid,this.eventname,this.customerid,this.customerPhone,this.cutomername,this.pin,this.title,this.id,this.phone,this.location,this.description}) : super(key: key);
 
   @override
   State<ServiceDetailsScreenUser> createState() => _ServiceDetailsScreenUserState();
@@ -47,6 +48,7 @@ callbackid=uuid.v1();
   }
   @override
   Widget build(BuildContext context) {
+    print(widget.imgurl);
     return Scaffold(
 
       body: Container(
@@ -71,7 +73,15 @@ callbackid=uuid.v1();
                         width: MediaQuery.of(context).size.width,
 
 
-                        child: Image.asset('assets/images/photography2.jpg',fit: BoxFit.fitWidth,)),
+                        child: widget.imgurl ==
+                            null
+                            ? Image.asset(
+                          'assets/images/photography2.jpg)',
+                          fit: BoxFit.cover,
+                        )
+                            : Image.network(
+                          widget.imgurl.toString(),fit: BoxFit.fitWidth,)
+                    ),
 
 
 
@@ -80,7 +90,7 @@ callbackid=uuid.v1();
                       bottom: 30,
                       left: 20,
                       child: Container(
-                        child: AppText(text: widget.title,color: Colors.white, size: 24,fw: FontWeight.w700,),
+                        child: AppText(text: widget.eventname,color: Colors.white, size: 24,fw: FontWeight.w700,),
                       ),
                     )
                   ],
@@ -96,7 +106,14 @@ callbackid=uuid.v1();
 
                     children: [
 
-                      AppText(text: "Contact Details",size:20 ,fw: FontWeight.w500,),
+                      AppText(text: 'Description',size:20 ,fw: FontWeight.w900),
+                      SizedBox(height: 20),
+
+
+                      AppText(text: widget.description,size:20 ,fw: FontWeight.w500),
+                      SizedBox(height: 50),
+
+                      AppText(text: "Contact Details",size:20 ,fw: FontWeight.w900,),
                       SizedBox(height: 10),
 
                       Card(
@@ -287,6 +304,7 @@ callbackid=uuid.v1();
                                     'status':1,
                                     'callstatus':0,
                                     'session':time,
+                                    'servicetype':widget.title,
                                     'comment':commentcontroller.text,
                                     'date':_dateController2.text,
                                     'createdat':DateTime.now()

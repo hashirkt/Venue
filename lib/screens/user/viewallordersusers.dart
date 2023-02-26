@@ -67,7 +67,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          // give the tab bar a height [can change hheight to preferred height]
+          // give the tab bar a height [can change height to preferred height]
           Container(
             height: 45,
             decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                       children: [
                         AppText(
                           text: "All Bookings",
-                          color: Colors.black87,
+                          color: Colors.white,
                           size: 18,
                         ),
                         SizedBox(
@@ -146,7 +146,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                     elevation: 5.0,
                                                     child: Container(
                                                         //color: Colors.red,
-                                                        height: 150,
+                                                        height: 200,
                                                         width: MediaQuery.of(
                                                                 context)
                                                             .size
@@ -178,20 +178,49 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                         CrossAxisAlignment
                                                                             .start,
                                                                     children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          AppText(text: 'Eventname:',size: 16,fw: FontWeight.w500,),
+                                                                          AppText(
+                                                                            text: feed[index]
+                                                                            [
+                                                                            'eventname'],
+                                                                            color: Colors
+                                                                                .black87,
+                                                                          ),
+                                                                          // AppText(
+                                                                          //  text: feed[index]
+                                                                          //   ['storename'],
+                                                                          //  color: Colors
+                                                                          //       .black45,
+                                                                          //   size: 12,
+                                                                          // ),
+
+                                                                        ],
+                                                                      ),
+
+
                                                                       AppText(
                                                                         text: feed[index]
-                                                                            [
-                                                                            'session'],
+                                                                        [
+                                                                        'servicetype'],
                                                                         color: Colors
-                                                                            .black87,
+                                                                            .black,
+                                                                        size:
+                                                                        16,
                                                                       ),
-                                                                      // AppText(
-                                                                      //  text: feed[index]
-                                                                      //   ['storename'],
-                                                                      //  color: Colors
-                                                                      //       .black45,
-                                                                      //   size: 12,
-                                                                      // ),
+
+                                                                      SizedBox(height: 10,),
+
+                                                                      AppText(
+                                                                        text: feed[index]
+                                                                        [
+                                                                        'session'],
+                                                                        color: Colors
+                                                                            .black45,
+                                                                        size:
+                                                                        16,
+                                                                      ),
                                                                       AppText(
                                                                         text: feed[index]
                                                                             [
@@ -199,7 +228,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                         color: Colors
                                                                             .black45,
                                                                         size:
-                                                                            12,
+                                                                            16,
                                                                       ),
 
                                                                       AppText(
@@ -209,7 +238,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                         color: Colors
                                                                             .black45,
                                                                         size:
-                                                                            12,
+                                                                            16,
                                                                       ),
                                                                       Container(
                                                                           height:
@@ -283,7 +312,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                       children: [
                         AppText(
                           text: "All Bookings",
-                          color: btnColor,
+                          color: Colors.white,
                           size: 18,
                         ),
                         SizedBox(

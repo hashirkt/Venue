@@ -38,11 +38,36 @@ class _EventHomePageState extends State<EventHomePage> {
       appBar: AppBar(
         backgroundColor: btnColor,
         actions: [
-          IconButton(onPressed:(){
-            FirebaseAuth.instance.signOut().then((value) {
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
-            });
-          }, icon: Icon(Icons.logout))
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Sign Out"),
+                        content: Container(
+                          child: Text("Do You Really want to  log out"),
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                FirebaseAuth.instance.signOut().then((value) =>
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        "/login",
+                                            (Route<dynamic> route) => false));
+                              },
+                              child: Text("Yes")),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text("No"))
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(Icons.logout))
         ],
       ),
       body: Container(
@@ -53,6 +78,15 @@ class _EventHomePageState extends State<EventHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+            AppText(
+              text: "Welcome ${widget.eventname}",
+              size: 28,
+              fw: FontWeight.w800,
+              color: backColor,
+            ),
+            SizedBox(height: 20,),
+
             AppText(
               text: "Event Managers Dashboard",
               size: 26,
@@ -70,7 +104,9 @@ class _EventHomePageState extends State<EventHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ViewAllEventBooking()));
+                                builder: (context) => ViewAllEventBooking(
+                                  id: widget.id,
+                                )));
                       },
                       child: Container(
                         height: 100,

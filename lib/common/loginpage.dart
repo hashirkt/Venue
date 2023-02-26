@@ -234,7 +234,18 @@ class _LoginPageState extends State<LoginPage> {
                                                         )),
                                                 (route) => false);
                                           }
-                                        }));
+                                        }))
+                                    .catchError((e) {
+                                  var list = e.toString().split("]");
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: btnColor,
+                                          content: Container(
+                                              height: 100,
+                                              child: Center(
+                                                  child: Text("${list[1]}")))));
+                                });
                               }
 
                               print(usernameController.text);

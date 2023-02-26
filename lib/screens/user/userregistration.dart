@@ -197,6 +197,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                   }
                 },
                 controller: phoneController,
+                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,

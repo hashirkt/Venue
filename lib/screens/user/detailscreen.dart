@@ -7,8 +7,6 @@ import 'package:venue/constants/colors.dart';
 import 'package:venue/utilities/apptext.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-
-
 class DetailsPage extends StatefulWidget {
   String? customerid;
   String? cutomername;
@@ -61,14 +59,12 @@ class _DetailsPageState extends State<DetailsPage> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _dateController2 = TextEditingController();
 
-
-  var uuid=Uuid();
+  var uuid = Uuid();
   var docid;
 
   @override
   initState() {
-
-    docid=uuid.v1();
+    docid = uuid.v1();
     _facilities.addAll(widget.facility);
     _dateController.text = DateFormat.yMd().format(DateTime.now());
   }
@@ -126,6 +122,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                       SizedBox(height: 10),
                       Card(
+                        color: Colors.white70,
                         child: Container(
                           padding: EdgeInsets.all(10),
                           height: 85,
@@ -289,13 +286,19 @@ class _DetailsPageState extends State<DetailsPage> {
                                                               fw: FontWeight
                                                                   .w600,
                                                             ),
-                                                            snapshot.data!.docs[index]['offer']!="0" ?    AppText(
-                                                              text:
-                                                                  "Offer.${snapshot.data!.docs[index]['offer']}%",
-                                                              size: 18,
-                                                              color:
-                                                                  Colors.white,
-                                                            ):SizedBox(),
+                                                            snapshot.data!.docs[
+                                                                            index]
+                                                                        [
+                                                                        'offer'] !=
+                                                                    "0"
+                                                                ? AppText(
+                                                                    text:
+                                                                        "Offer.${snapshot.data!.docs[index]['offer']}%",
+                                                                    size: 18,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  )
+                                                                : SizedBox(),
                                                           ],
                                                         ),
                                                       )
@@ -336,28 +339,25 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                             MainAxisAlignment.spaceBetween,
                                                                         children: <
                                                                             Widget>[
-
                                                                           Expanded(
                                                                             child:
                                                                                 Container(
-                                                                                  width: 120,
-                                                                                  child: TextFormField(
-                                                                                    style: TextStyle(fontSize: 16),
-                                                                                    enabled: false,
-                                                                                    keyboardType: TextInputType.text,
-                                                                                    controller: _dateController2,
-                                                                                    onSaved: (String? val) {
-                                                                                      _setDate = val!;
-                                                                                    },
-                                                                                    decoration: InputDecoration(
-                                                                                        disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-                                                                                     hintText: "Select Date",
-                                                                                        contentPadding: EdgeInsets.only(top: 0.0)),
-                                                                                  ),
-                                                                                ),
+                                                                              width: 120,
+                                                                              child: TextFormField(
+                                                                                style: TextStyle(fontSize: 16),
+                                                                                enabled: false,
+                                                                                keyboardType: TextInputType.text,
+                                                                                controller: _dateController2,
+                                                                                onSaved: (String? val) {
+                                                                                  _setDate = val!;
+                                                                                },
+                                                                                decoration: InputDecoration(disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none), hintText: "Select Date", contentPadding: EdgeInsets.only(top: 0.0)),
+                                                                              ),
+                                                                            ),
                                                                           ),
                                                                           InkWell(
-                                                                            onTap: () async {
+                                                                            onTap:
+                                                                                () async {
                                                                               var picked = await showDatePicker(context: context, initialDate: selectedDate2, initialDatePickerMode: DatePickerMode.day, firstDate: DateTime(2015), lastDate: DateTime(2101));
                                                                               if (picked != null)
                                                                                 setState(() {
@@ -365,10 +365,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                                   _dateController2.text = DateFormat.yMd().format(selectedDate2);
                                                                                 });
                                                                             },
-
-                                                                            child: Icon(Icons.calendar_month),
+                                                                            child:
+                                                                                Icon(Icons.calendar_month),
                                                                           )
-
                                                                         ],
                                                                       ),
                                                                       SizedBox(
@@ -393,7 +392,8 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                           setState(() =>
                                                                               time = value);
                                                                         },
-                                                                        value:time,
+                                                                        value:
+                                                                            time,
                                                                         decoration: InputDecoration(
                                                                             enabledBorder:
                                                                                 OutlineInputBorder(),
@@ -427,28 +427,51 @@ class _DetailsPageState extends State<DetailsPage> {
                                                               ),
                                                               actions: <Widget>[
                                                                 TextButton(
-                                                                  onPressed: () {
-
-                                                                    FirebaseFirestore.instance.collection('bookings').doc(docid).set({
-
-'audname':widget.name,
-                                                                      'bookingid':docid,
-                                                                      'bookingDate':_dateController.text,
-                                                                      'session':time,
-                                                                      'audid':widget.id,
-                                                                      'comments':commentcontroller.text,
-                                                                      'status':0,
-                                                                      'packageid':snapshot.data!.docs[index]['packageId'],
-                                                                      'reply':"",
-                                                                      'replystatus':0,
-                                                                      'customerid':widget.customerid,
-
-                                                                      'paymentstatus':0,
-                                                                      'paymentamount':snapshot.data!.docs[index]['price']
-
+                                                                  onPressed:
+                                                                      () {
+                                                                    FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            'bookings')
+                                                                        .doc(
+                                                                            docid)
+                                                                        .set({
+                                                                      'audname':
+                                                                          widget
+                                                                              .name,
+                                                                      'bookingid':
+                                                                          docid,
+                                                                      'bookingDate':
+                                                                          _dateController
+                                                                              .text,
+                                                                      'session':
+                                                                          time,
+                                                                      'audid':
+                                                                          widget
+                                                                              .id,
+                                                                      'comments':
+                                                                          commentcontroller
+                                                                              .text,
+                                                                      'status':
+                                                                          0,
+                                                                      'packageid': snapshot
+                                                                          .data!
+                                                                          .docs[index]['packageId'],
+                                                                      'reply':
+                                                                          "",
+                                                                      'replystatus':
+                                                                          0,
+                                                                      'customerid':
+                                                                          widget
+                                                                              .customerid,
+                                                                      'paymentstatus':
+                                                                          0,
+                                                                      'paymentamount': snapshot
+                                                                          .data!
+                                                                          .docs[index]['price']
                                                                     }).then((value) {
-
-                                                                      Navigator.pop(context);
+                                                                      Navigator.pop(
+                                                                          context);
                                                                     });
                                                                   },
                                                                   child:

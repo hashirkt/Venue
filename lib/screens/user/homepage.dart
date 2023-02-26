@@ -74,7 +74,7 @@ var imgurl;
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         AppText(
-                          text: "Welcome ${widget.lname}",
+                          text: "Welcome ${widget.fname}",
                           size: 28,
                           fw: FontWeight.w900,
                           color: Colors.white,
@@ -403,6 +403,7 @@ eventname: snapshot.data!.docs[index]['eventname'],
                                                       customerPhone: widget.phone,
                                                       cutomername: widget.fname,
                                                       eventmanagerid: snapshot.data!.docs[index]['eventmanagerid'],
+                                                      imgurl: snapshot.data!.docs[index]['imgurl'],
 
                                                     )));
                                       },
@@ -420,12 +421,22 @@ eventname: snapshot.data!.docs[index]['eventname'],
                                                 children: [
                                                   Container(
                                                     height: 200,
+                                                    width: 250,
 
                                                     // color: Colors.green,
-                                                    child: Image.asset(
-                                                      'assets/images/photography4.jpg',
+                                                    child: snapshot.data!
+                                                        .docs[index]
+                                                    ['imgurl'] ==
+                                                        null
+                                                        ? Image.asset(
+                                                      'assets/images/photography4.jpg)',
                                                       fit: BoxFit.cover,
-                                                    ),
+                                                    )
+                                                        : Image.network(
+                                                        snapshot.data!
+                                                            .docs[index]
+                                                        ['imgurl'],
+                                                        fit: BoxFit.cover),
                                                   ),
                                                   Container(
                                                     height: 70,
@@ -574,6 +585,7 @@ eventname: snapshot.data!.docs[index]['eventname'],
                                            MaterialPageRoute(
                                                builder: (context) =>
                                                    ServiceDetailsScreenUser(
+                                                     imgurl:  snapshot.data!.docs[index]['imgurl'],
                                                      eventname: snapshot.data!.docs[index]['eventname'],
                                                      id: snapshot.data!.docs[index]['id'],
                                                      title: snapshot.data!.docs[index]['title'],
@@ -605,10 +617,19 @@ eventname: snapshot.data!.docs[index]['eventname'],
                                                    width: 250,
 
                                                    // color: Colors.green,
-                                                   child: Image.asset(
-                                                     'assets/images/catering4.jpg',
+                                                   child: snapshot.data!
+                                                       .docs[index]
+                                                   ['imgurl'] ==
+                                                       null
+                                                       ? Image.asset(
+                                                     'assets/images/catering4.jpg)',
                                                      fit: BoxFit.cover,
-                                                   ),
+                                                   )
+                                                       : Image.network(
+                                                       snapshot.data!
+                                                           .docs[index]
+                                                       ['imgurl'],
+                                                       fit: BoxFit.cover),
                                                  ),
                                                  Container(
                                                    height: 70,
@@ -770,6 +791,7 @@ title: "Event Decoration",
                                                       customerPhone: widget.phone,
                                                       cutomername: widget.fname,
                                                       eventmanagerid: snapshot.data!.docs[index]['eventmanagerid'],
+                                                      imgurl:  snapshot.data!.docs[index]['imgurl'],
 
                                                     )));
                                       },
@@ -787,13 +809,22 @@ title: "Event Decoration",
                                                 children: [
                                                   Container(
                                                     height: 200,
-                                                    width:250,
+                                                    width: 250,
 
                                                     // color: Colors.green,
-                                                    child: Image.asset(
-                                                      'assets/images/eventmanagement1.jpg',
+                                                    child: snapshot.data!
+                                                        .docs[index]
+                                                    ['imgurl'] ==
+                                                        null
+                                                        ? Image.asset(
+                                                      'assets/images/eventmanagement1.jpg)',
                                                       fit: BoxFit.cover,
-                                                    ),
+                                                    )
+                                                        : Image.network(
+                                                        snapshot.data!
+                                                            .docs[index]
+                                                        ['imgurl'],
+                                                        fit: BoxFit.cover),
                                                   ),
                                                   Container(
                                                     height: 70,
