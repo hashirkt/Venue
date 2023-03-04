@@ -115,7 +115,7 @@ class _UserRegistrationState extends State<UserRegistration> {
               TextFormField(
                 validator: (value) {
                   if (value!.length <= 5) {
-                    return "Invalid Password";
+                    return "Password should be of minimum 5 characters";
                   }
                 },
                 controller: passwordController,
@@ -282,7 +282,7 @@ class _UserRegistrationState extends State<UserRegistration> {
                               MaterialPageRoute(
                                   builder: (context) => LoginPage()));
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Account Created"),),);
+                              SnackBar(content: Text("Account Created"),backgroundColor: btnColor,),);
                         });
                       });
                     }

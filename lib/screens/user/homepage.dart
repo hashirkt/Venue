@@ -5,6 +5,7 @@ import 'package:venue/common/loginpage.dart';
 import 'package:venue/constants/colors.dart';
 import 'package:venue/screens/user/detailscreen.dart';
 import 'package:venue/screens/user/eventservicedetails.dart';
+import 'package:venue/screens/user/searchpage.dart';
 import 'package:venue/screens/user/viewalleventservices_page.dart';
 import 'package:venue/utilities/apptext.dart';
 import 'package:venue/utilities/header.dart';
@@ -91,7 +92,7 @@ var imgurl;
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image:
-                                          AssetImage('assets/images/user1.jpg')),
+                                          AssetImage('assets/images/userdefault.png')),
                                   color: Colors.red,
                                   shape: BoxShape.circle),
                             ):Container(
@@ -113,28 +114,34 @@ var imgurl;
                     SizedBox(
                       height: 15,
                     ),
-                    Container(
-                      height: 45,
-                      width: size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              flex: 2,
-                              child: AppText(
-                                text:
-                                    "  Search Spaces, Event Planners, Photographers",
-                                size: 14,
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: Icon(Icons.search),
-                          )
-                        ],
+                    InkWell(
+                      onTap: (){
+                        
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchPage()));
+                      },
+                      child: Container(
+                        height: 45,
+                        width: size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                                flex: 2,
+                                child: AppText(
+                                  text:
+                                      "  Search Spaces, Event Planners, Photographers",
+                                  size: 14,
+                                )),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: Icon(Icons.search),
+                            )
+                          ],
+                        ),
                       ),
                     ),
 

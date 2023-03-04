@@ -7,6 +7,7 @@ import 'package:venue/screens/user/callbackrequest.dart';
 import 'package:venue/screens/user/commonfeedbackadmin.dart';
 import 'package:venue/screens/user/homepage.dart';
 import 'package:venue/screens/user/vieprofile_.dart';
+import 'package:venue/screens/user/viewallnotification%20(1).dart';
 import 'package:venue/screens/user/viewallordersusers.dart';
 import 'package:venue/screens/user/viewprofile.dart';
 import 'package:venue/utilities/apptext.dart';
@@ -100,7 +101,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         phone: phone,
         imgurl: img,
       ),
-      Text("Favourites")
+    ViewAllNotificationsUSer(
+      uid: id,
+    )
     ];
     super.initState();
   }
@@ -152,7 +155,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/user1.jpg'))),
+                                            'assets/images/userdefault.jpg'))),
                               ),
                       ),
                       SizedBox(
@@ -215,6 +218,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       appBar: AppBar(
         backgroundColor: btnColor,
         actions: [
+
+
+
           IconButton(
               onPressed: () {
                 showDialog(
@@ -274,8 +280,8 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               icon: Icon(Icons.person)),
           BottomNavigationBarItem(
               backgroundColor: btnColor,
-              label: "Favourites",
-              icon: Icon(Icons.favorite))
+              label: "Messages",
+              icon: Icon(Icons.notifications))
         ],
       ),
       body: Container(

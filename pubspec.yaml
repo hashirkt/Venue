@@ -45,6 +45,7 @@ dependencies:
   shared_preferences:
   flutter_credit_card: ^3.0.5
   lottie:
+  flutter_rating_bar: ^4.0.1
 
 
 dev_dependencies:

@@ -304,7 +304,7 @@ class _AuditoriumRegistrationState extends State<AuditoriumRegistration > {
                                   builder: (context) => LoginPage()));
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Account Created"),
+                              content: Text("Account Created"),backgroundColor: btnColor,
                             ),
                           );
                         });

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:venue/constants/colors.dart';
 import 'package:venue/screens/user/paymentpage.dart';
 import 'package:venue/utilities/apptext.dart';
@@ -53,9 +54,24 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
   }
 
   TabController? _tabController;
+  TextEditingController replyController=TextEditingController();
+  TextEditingController ratingController=TextEditingController();
+  final key= GlobalKey<FormState>();
+  late final _ratingController;
+  late double _rating;
 
+  double _userRating = 3.0;
+  int _ratingBarMode = 1;
+  double _initialRating = 2.0;
+  bool _isRTLMode = false;
+  bool _isVertical = false;
+
+  IconData? _selectedIcon;
+  var ratings;
   @override
   void initState() {
+    _ratingController = TextEditingController(text: '3.0');
+    _rating = _initialRating;
     setData();
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
@@ -135,7 +151,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                           onTap: () {},
                                           child: Container(
                                             margin: EdgeInsets.only(bottom: 10),
-                                            height: 200,
+                                            height: 250,
                                             //color: Colors.red,
                                             child: Stack(
                                               children: [
@@ -146,7 +162,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                     elevation: 5.0,
                                                     child: Container(
                                                         //color: Colors.red,
-                                                        height: 200,
+                                                        height: 250,
                                                         width: MediaQuery.of(
                                                                 context)
                                                             .size
@@ -263,8 +279,133 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                                       fw: FontWeight.w700,
                                                                                       color: Colors.red,
                                                                                     ),
+
+                                                                              Container(
+
+
+                                                                                  child:
+                                                                                  Row(
+                                                                                    mainAxisAlignment:
+                                                                                    MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+
+                                                                                      feed[index]['callstatus'] == 1
+
+                                                                                          ? IconButton(
+                                                                                          onPressed:
+                                                                                              () {
+                                                                                            showDialog<void>(
+                                                                                              context: context,
+                                                                                              builder: (BuildContext context) {
+                                                                                                return AlertDialog(
+                                                                                                  title: const Text('Write feedback'),
+                                                                                                  content: Container(
+                                                                                                    height: 180,
+                                                                                                    child: Form(
+                                                                                                      key: key,
+                                                                                                      child: Column(
+                                                                                                        children: [
+                                                                                                          TextFormField(
+                                                                                                            controller: replyController,
+                                                                                                            validator: (value) {
+                                                                                                              if (value!.isEmpty) {
+                                                                                                                return "feedback cannot be empty";
+                                                                                                              }
+                                                                                                            },
+
+                                                                                                            decoration: InputDecoration(
+                                                                                                                errorStyle: TextStyle(color: Colors.black),
+
+                                                                                                                hintText: "Feedback Message"),
+                                                                                                          ),
+                                                                                                          SizedBox(height: 20,),
+
+                                                                                                      RatingBar.builder(
+                                                                                                        initialRating: 3,
+                                                                                                        minRating: 1,
+                                                                                                        direction: Axis.horizontal,
+                                                                                                        allowHalfRating: true,
+                                                                                                        itemCount: 5,
+                                                                                                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                                                                                        itemBuilder: (context, _) => Icon(
+                                                                                                          Icons.star,
+                                                                                                          color: Colors.amber,
+                                                                                                        ),
+                                                                                                        onRatingUpdate: (rating) {
+                                                                                                          print(rating);
+                                                                                                          setState((){
+
+                                                                                                            ratings=rating;
+                                                                                                          });
+                                                                                                        },
+                                                                                                      )
+                                                                                                        ],
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  actions: <Widget>[
+
+                                                                                                    TextButton(
+                                                                                                      style: TextButton.styleFrom(
+                                                                                                          textStyle: TextStyle(color: Colors.white),
+
+                                                                                                          backgroundColor: btnColor
+                                                                                                      ),
+                                                                                                      child: const Text('Cancel'),
+                                                                                                      onPressed: () {
+                                                                                                        Navigator.of(context).pop();
+                                                                                                      },
+                                                                                                    ),
+                                                                                                    TextButton(
+                                                                                                      style: TextButton.styleFrom(
+                                                                                                          textStyle: TextStyle(color: Colors.white),
+
+                                                                                                          backgroundColor: btnColor
+                                                                                                      ),
+                                                                                                      child: const Text('Send Feedback'),
+                                                                                                      onPressed: () {
+                                                                                                        if(key.currentState!.validate()){
+
+                                                                                                          FirebaseFirestore.instance.collection('rating').doc(feed[index]['callbackid']).set({
+
+                                                                                                            'feedback':replyController.text,
+                                                                                                            'feedbackid':feed[index]['callbackid'],
+                                                                                                            'customername':feed[index]['customerid'],
+                                                                                                            'status':replyController.text,
+                                                                                                            'rating':ratings,
+                                                                                                            'userid':feed[index]['customerid'],
+                                                                                                            'managerid':feed[index]['managerid']
+                                                                                                          }).then((value) {
+
+                                                                                                            Navigator.pop(context);
+
+                                                                                                          });
+                                                                                                        }
+                                                                                                      },
+                                                                                                    ),
+
+                                                                                                  ],
+                                                                                                );
+                                                                                              },
+                                                                                            );
+
+                                                                                          },
+                                                                                          icon:
+                                                                                          Icon(
+                                                                                            Icons.message_sharp,
+                                                                                            color: Colors.green,
+                                                                                          ))
+                                                                                          : SizedBox.shrink()
+
+
+                                                                                    ],
+                                                                                  )),
                                                                             ],
                                                                           )),
+
+
+
+
                                                                     ],
                                                                   )),
                                                             ),
@@ -437,7 +578,7 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                                       fw: FontWeight.w700,
                                                                                       color: Colors.red,
                                                                                     ),
-                                                                              feed[index]['replystatus'] == 1
+                                                                              feed[index]['replystatus'] == 1 &&     feed[index]['paymentstatus'] == 0
                                                                                   ? InkWell(
                                                                                       onTap: () {
                                                                                         Navigator.push(
@@ -464,7 +605,132 @@ class _ViewAllOrdersUserState extends State<ViewAllOrdersUser>
                                                                                         color: Colors.green,
                                                                                       ),
                                                                                     )
-                                                                                  : SizedBox(),
+                                                                                  :     feed[index]['replystatus'] == 0 &&     feed[index]['paymentstatus'] == 0?AppText(
+                                                                                text: "Pending",
+                                                                                size: 16,
+                                                                                fw: FontWeight.w700,
+                                                                                color: Colors.green,
+                                                                              ):AppText(text: "Payment Done",size: 16,),
+
+                                                                              Container(
+
+
+                                                                                  child:
+                                                                                  Row(
+                                                                                    mainAxisAlignment:
+                                                                                    MainAxisAlignment.spaceBetween,
+                                                                                    children: [
+
+                                                                                      feed[index]['paymentstatus'] == 1
+
+                                                                                          ? IconButton(
+                                                                                          onPressed:
+                                                                                              () {
+                                                                                            showDialog<void>(
+                                                                                              context: context,
+                                                                                              builder: (BuildContext context) {
+                                                                                                return AlertDialog(
+                                                                                                  title: const Text('Write feedback'),
+                                                                                                  content: Container(
+                                                                                                    height: 180,
+                                                                                                    child: Form(
+                                                                                                      key: key,
+                                                                                                      child: Column(
+                                                                                                        children: [
+                                                                                                          TextFormField(
+                                                                                                            controller: replyController,
+                                                                                                            validator: (value) {
+                                                                                                              if (value!.isEmpty) {
+                                                                                                                return "feedback cannot be empty";
+                                                                                                              }
+                                                                                                            },
+
+                                                                                                            decoration: InputDecoration(
+                                                                                                                errorStyle: TextStyle(color: Colors.black),
+
+                                                                                                                hintText: "Feedback Message"),
+                                                                                                          ),
+                                                                                                          SizedBox(height: 20,),
+
+                                                                                                          RatingBar.builder(
+                                                                                                            initialRating: 3,
+                                                                                                            minRating: 1,
+                                                                                                            direction: Axis.horizontal,
+                                                                                                            allowHalfRating: true,
+                                                                                                            itemCount: 5,
+                                                                                                            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                                                                                            itemBuilder: (context, _) => Icon(
+                                                                                                              Icons.star,
+                                                                                                              color: Colors.amber,
+                                                                                                            ),
+                                                                                                            onRatingUpdate: (rating) {
+                                                                                                              print(rating);
+                                                                                                              setState((){
+
+                                                                                                                ratings=rating;
+                                                                                                              });
+                                                                                                            },
+                                                                                                          )
+                                                                                                        ],
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                  actions: <Widget>[
+
+                                                                                                    TextButton(
+                                                                                                      style: TextButton.styleFrom(
+                                                                                                          textStyle: TextStyle(color: Colors.white),
+
+                                                                                                          backgroundColor: btnColor
+                                                                                                      ),
+                                                                                                      child: const Text('Cancel'),
+                                                                                                      onPressed: () {
+                                                                                                        Navigator.of(context).pop();
+                                                                                                      },
+                                                                                                    ),
+                                                                                                    TextButton(
+                                                                                                      style: TextButton.styleFrom(
+                                                                                                          textStyle: TextStyle(color: Colors.white),
+
+                                                                                                          backgroundColor: btnColor
+                                                                                                      ),
+                                                                                                      child: const Text('Send Feedback'),
+                                                                                                      onPressed: () {
+                                                                                                        if(key.currentState!.validate()){
+
+                                                                                                          FirebaseFirestore.instance.collection('audrating').doc(feed[index]['bookingid']).set({
+
+                                                                                                            'feedback':replyController.text,
+                                                                                                            'feedbackid':feed[index]['bookingid'],
+                                                                                                            'status':replyController.text,
+                                                                                                            'rating':ratings,
+                                                                                                            'userid':feed[index]['customerid'],
+                                                                                                            'audid':feed[index]['audid']
+                                                                                                          }).then((value) {
+
+                                                                                                            Navigator.pop(context);
+
+                                                                                                          });
+                                                                                                        }
+                                                                                                      },
+                                                                                                    ),
+
+                                                                                                  ],
+                                                                                                );
+                                                                                              },
+                                                                                            );
+
+                                                                                          },
+                                                                                          icon:
+                                                                                          Icon(
+                                                                                            Icons.message_sharp,
+                                                                                            color: Colors.green,
+                                                                                          ))
+                                                                                          : SizedBox.shrink()
+
+
+                                                                                    ],
+                                                                                  )),
                                                                             ],
                                                                           )),
                                                                     ],

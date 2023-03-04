@@ -226,7 +226,10 @@ class _CrediCardClassState extends State<CrediCardClass> {
                               'amount': widget.item!['paymentamount'],
                               'customername': widget.fname,
                               'customeremail': widget.lname,
-                              'status': 1
+                              'status': 1,
+                              'customerid':widget.id,
+                              'bookinggid':widget.item!['bookingid'],
+                              'audid':widget.item!['audid']
                             }).then((value) {
                               Navigator.push(
                                   context,

@@ -300,7 +300,7 @@ class _EventRegistrationState extends State<EventRegistration> {
                                   builder: (context) => LoginPage()));
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Account Created"),
+                              content: Text("Account Created"),backgroundColor: btnColor,
                             ),
                           );
                         });

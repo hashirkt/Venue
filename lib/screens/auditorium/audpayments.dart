@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/constants/colors.dart';
 import 'package:venue/utilities/apptext.dart';
 
 class AudPayments extends StatefulWidget {
-  const AudPayments({Key? key}) : super(key: key);
+  String?audid;
+ AudPayments({Key? key,this.audid}) : super(key: key);
 
   @override
   State<AudPayments> createState() => _AudPaymentsState();
@@ -36,39 +38,55 @@ class _AudPaymentsState extends State<AudPayments> {
                   height: MediaQuery.of(context).size.height*0.80,
                   width: MediaQuery.of(context).size.width,
 
-                  child:ListView.builder(
+                  child:StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('payment').where('audid',isEqualTo: widget.audid).snapshots(),
 
-                      itemCount: 10,
-                      itemBuilder: (context,index){
+                    builder: (context,snapshot){
+
+                      if(snapshot.hasData){
+
+                        return ListView.builder(
+
+                            itemCount:snapshot.data!.docs.length,
+                            itemBuilder: (context,index){
 
 
-                        return  Card(
-                          elevation: 5.0,
-                          child: Container(
-                            height: 100,
-                            child: Center(
-                              child: ListTile(
-
-                                leading: CircleAvatar(
+                              return  Card(
+                                elevation: 5.0,
+                                child: Container(
+                                  height: 100,
                                   child: Center(
-                                    child: Text(
-                                        (index+1).toString()
+                                    child: ListTile(
+
+                                      leading: CircleAvatar(
+                                        child: Center(
+                                          child: Text(
+                                              (index+1).toString()
+                                          ),
+                                        ),
+                                      ),
+                                      trailing: IconButton(
+
+                                        onPressed: (){},
+
+                                        icon: Icon(Icons.arrow_forward_ios),
+                                      ),
+                                      title: AppText(text: snapshot.data!.docs[index]['customername'],size: 18,),
+                                      subtitle: AppText(text: "Amount: Rs.${snapshot.data!.docs[index]['amount']}/-",size: 16,fw: FontWeight.w500,),
                                     ),
                                   ),
                                 ),
-                                trailing: IconButton(
+                              );
+                            });
+                      }
 
-                                  onPressed: (){},
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
 
-                                  icon: Icon(Icons.arrow_forward_ios),
-                                ),
-                                title: AppText(text: "Event 1",size: 18,),
-                                subtitle: AppText(text: "Payment Report",size: 16,),
-                              ),
-                            ),
-                          ),
-                        );
-                      })
+
+                    },
+                  )
               ),
 
               SizedBox(height: 30,),

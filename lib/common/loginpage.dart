@@ -60,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.black),
                           validator: (value) {
                             if (value!.isEmpty || !value.contains('@')) {
-                              return "Enter a valid username";
+                              return "Enter a valid email";
                             }
                           },
                           controller: usernameController,
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                               focusedBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: btnColor, width: 2)),
-                              hintText: "Username",
+                              hintText: "Email",
                               hintStyle: TextStyle(color: Colors.black54)),
                         ),
                         SizedBox(
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.black),
                           validator: (value) {
                             if (value!.length <= 5) {
-                              return "Invalid Password";
+                              return "Password should be of minimum 5 characters";
                             }
                           },
                           controller: passwordController,
@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: btnColor, width: 2)),
-                            hintText: "Password",
+                            hintText: "Password ",
                             hintStyle: TextStyle(color: Colors.black54),
                             suffixIcon: IconButton(
                               onPressed: () {
@@ -234,6 +234,12 @@ class _LoginPageState extends State<LoginPage> {
                                                         )),
                                                 (route) => false);
                                           }
+                                        }).catchError((e) {
+                                          var err = e.toString().split("]");
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content:
+                                                      Text(err[1].toString())));
                                         }))
                                     .catchError((e) {
                                   var list = e.toString().split("]");

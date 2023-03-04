@@ -8,6 +8,7 @@ import 'package:venue/screens/auditorium/audfeedbacks.dart';
 import 'package:venue/screens/auditorium/audpayments.dart';
 import 'package:venue/screens/auditorium/audprofile.dart';
 import 'package:venue/screens/auditorium/audservices.dart';
+import 'package:venue/screens/auditorium/viewallanotification_aud.dart';
 import 'package:venue/screens/user/detailscreen.dart';
 import 'package:venue/utilities/apptext.dart';
 import 'package:venue/utilities/header.dart';
@@ -51,6 +52,11 @@ class _AudHomePageState extends State<AudHomePage> {
         appBar: AppBar(
           backgroundColor: btnColor,
           actions: [
+            IconButton(onPressed: (){
+
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllNotificationsAud()));
+
+            }, icon: Icon(Icons.notifications)),
             IconButton(
                 onPressed: () {
                   showDialog(
@@ -186,7 +192,7 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AudFeedbacks()));
+                                      builder: (context) =>RatingsViewAud()));
                             },
                             child: Container(
                               height: 100,
@@ -213,7 +219,7 @@ class _AudHomePageState extends State<AudHomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => AudPayments()));
+                                      builder: (context) => AudPayments(audid:widget.id)));
                             },
                             child: Container(
                               height: 100,

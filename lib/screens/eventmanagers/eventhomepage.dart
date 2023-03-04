@@ -14,6 +14,8 @@ import 'package:venue/screens/eventmanagers/eventbookings.dart';
 import 'package:venue/screens/eventmanagers/eventfeedbacks.dart';
 import 'package:venue/screens/eventmanagers/eventpayments.dart';
 import 'package:venue/screens/eventmanagers/eventservices.dart';
+import 'package:venue/screens/eventmanagers/ratings.dart';
+import 'package:venue/screens/eventmanagers/viewallnotificationevent.dart';
 import 'package:venue/utilities/apptext.dart';
 
 class EventHomePage extends StatefulWidget {
@@ -175,7 +177,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EventFeedbacks()));
+                                builder: (context) =>ViewAllNotificationsEvent()));
                       },
                       child: Container(
                         height: 100,
@@ -186,7 +188,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\nFeedbacks",
+                          text: "View All\nNotification",
                           color: Colors.white,
                           size: 18,
                         )),
@@ -202,7 +204,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EventPayments()));
+                                builder: (context) => RatingsView(id: widget.id,)));
                       },
                       child: Container(
                         height: 100,
@@ -213,7 +215,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\nPayments",
+                          text: "View All Ratings",
                           color: Colors.white,
                           size: 18,
                         )),
