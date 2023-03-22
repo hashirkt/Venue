@@ -225,7 +225,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                           elevation: 5.0,
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              color: Colors.blue,
+                                              color: Colors.blueGrey,
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
@@ -260,12 +260,20 @@ class _DetailsPageState extends State<DetailsPage> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(snapshot.data!
-                                                                  .docs[index]
-                                                              ['title']),
-                                                          Text(snapshot.data!
-                                                                  .docs[index]
-                                                              ['description']),
+                                                          AppText(
+                                                            text: snapshot.data!
+                                                                    .docs[index]
+                                                                ['title'],
+                                                            size: 22,
+                                                            fw: FontWeight.bold,
+                                                          ),
+                                                          AppText(
+                                                            text: snapshot.data!
+                                                                    .docs[index]
+                                                                ['description'],
+                                                            size: 16,
+                                                            fw: FontWeight.w500,
+                                                          ),
                                                         ],
                                                       ),
                                                       Container(
@@ -284,7 +292,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                   "RS.${snapshot.data!.docs[index]['price']}/-",
                                                               size: 20,
                                                               fw: FontWeight
-                                                                  .w600,
+                                                                  .w700,
                                                             ),
                                                             snapshot.data!.docs[
                                                                             index]
@@ -487,7 +495,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                                           color: Colors.white,
                                                           size: 24,
                                                           fw: FontWeight.w500,
-                                                        )))
+                                                        ))),
+                                                SizedBox(
+                                                  height: 10,
+                                                )
                                               ],
                                             ),
                                           ),

@@ -22,6 +22,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: backColor,
       appBar: AppBar(
         backgroundColor: btnColor,
       ),
@@ -31,7 +32,8 @@ class _SearchPageState extends State<SearchPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              AppText(text: "Search"),
+              SizedBox(height: 20,),
+              AppText(text: "Search",size: 26,fw: FontWeight.w700,color: Colors.white,),
               // Row(
               //   children: <Widget>[
               //     Expanded(

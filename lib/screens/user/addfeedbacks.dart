@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 
 
 import 'package:uuid/uuid.dart';
+import 'package:venue/constants/colors.dart';
 import 'package:venue/utilities/apptext.dart';
 
 
@@ -50,6 +51,7 @@ class _AddFeedBackState extends State<AddFeedBack> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: btnColor,
 
         elevation: 0.0,
         title: Text(""
@@ -68,8 +70,9 @@ class _AddFeedBackState extends State<AddFeedBack> {
               children: [
                 AppText(
                   text: "Create New Feedback",
-                  size: 18,
+                  size: 22,
                   color: Colors.black87,
+                  fw: FontWeight.w500,
                 ),
                 SizedBox(
                   height: 20,
@@ -197,9 +200,19 @@ class _AddFeedBackState extends State<AddFeedBack> {
                         });
                       }
                     },
-                   child: AppText(
-                     text: "Submit",
+                   child: Container(
+                     height: 45,
+                     width: 150,
+                     decoration: BoxDecoration(
+                       color: btnColor,
+                       borderRadius: BorderRadius.circular(12),
+                     ),
+                     child: Center(
+                       child: AppText(
+                         text: "Submit",size: 24,fw: FontWeight.w600,
 
+                       ),
+                     ),
                    ),
                   ),
                 ),
