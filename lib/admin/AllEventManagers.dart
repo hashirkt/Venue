@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:venue/constants/colors.dart';
 import 'package:venue/utilities/apptext.dart';
@@ -11,6 +12,10 @@ class ViewAllEventManagers extends StatefulWidget {
 }
 
 class _ViewAllEventManagersState extends State<ViewAllEventManagers> {
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,39 +41,56 @@ class _ViewAllEventManagersState extends State<ViewAllEventManagers> {
                 height: MediaQuery.of(context).size.height*0.80,
                 width: MediaQuery.of(context).size.width,
 
-                child:ListView.builder(
+                child:StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('user').where('usertype',isEqualTo: 'event').snapshots(),
+                  builder: (context,snapshot){
+                    if(snapshot.hasError){
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if(snapshot.hasData){
+                      return ListView.builder(
 
-                    itemCount: 10,
-                    itemBuilder: (context,index){
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context,index){
 
 
-                  return  Card(
-                    elevation: 5.0,
-                    child: Container(
-                      height: 100,
-                      child: Center(
-                        child: ListTile(
+                            return  Card(
+                              elevation: 5.0,
+                              child: Container(
+                                height: 100,
+                                child: Center(
+                                  child: ListTile(
 
-                          leading: CircleAvatar(
-                            child: Center(
-                              child: Text(
-                                  (index+1).toString()
+                                    leading: CircleAvatar(
+                                      child: Center(
+                                        child: Text(
+                                            (index+1).toString()
+                                        ),
+                                      ),
+                                    ),
+                                    trailing: IconButton(
+
+                                      onPressed: (){},
+
+                                      icon: Icon(Icons.arrow_forward_ios),
+                                    ),
+                                    title: AppText(text: snapshot.data!.docs[index]['eventname'],size: 18,),
+                                    subtitle: AppText(text:snapshot.data!.docs[index]['place'],size: 16,),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-trailing: IconButton(
+                            );
+                          });
+                    }
 
-  onPressed: (){},
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
 
-  icon: Icon(Icons.arrow_forward_ios),
-),
-                          title: AppText(text: "Event 1",size: 18,),
-                          subtitle: AppText(text: "Location",size: 16,),
-                        ),
-                      ),
-                    ),
-                  );
-                })
+                  },
+                )
               ),
 
               SizedBox(height: 30,),
