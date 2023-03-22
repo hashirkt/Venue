@@ -291,7 +291,7 @@ class _EventRegistrationState extends State<EventRegistration> {
                           'place': placeController.text,
                           'pin': pinController.text,
                           'create_at': DateTime.now(),
-                          'status': 1,
+                          'status': 0,
                           'usertype': "event"
                         }).then((value) {
                           Navigator.push(

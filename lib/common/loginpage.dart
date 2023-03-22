@@ -211,7 +211,8 @@ class _LoginPageState extends State<LoginPage> {
                                           }
 
                                           if (value.data()!['usertype'] ==
-                                              'event') {
+                                              'event' && value.data()!['status'] ==
+                                             1) {
                                             Navigator.pushAndRemoveUntil(
                                                 context,
                                                 MaterialPageRoute(
@@ -233,6 +234,8 @@ class _LoginPageState extends State<LoginPage> {
                                                               .data()!['id'],
                                                         )),
                                                 (route) => false);
+                                          }else{
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Waiting for Admin Approval")));
                                           }
                                         }).catchError((e) {
                                           var err = e.toString().split("]");

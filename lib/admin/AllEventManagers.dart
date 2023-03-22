@@ -72,7 +72,89 @@ class _ViewAllEventManagersState extends State<ViewAllEventManagers> {
                                     ),
                                     trailing: IconButton(
 
-                                      onPressed: (){},
+                                      onPressed: (){
+
+                                        showDialog(context: context, builder: (context){
+
+
+                                          return AlertDialog(
+                                            content: Container(
+                                              padding: EdgeInsets.all(15),
+                                              height: 200,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  AppText(text:"Details",size: 18,fw: FontWeight.bold,),
+                                                  SizedBox(height: 10,),
+                                                  AppText(text: snapshot.data!.docs[index]['eventname'],size: 18,),
+                                                  AppText(text:snapshot.data!.docs[index]['place'],size: 16,),
+                                                  AppText(text:snapshot.data!.docs[index]['email'],size: 16,),
+                                                  AppText(text:snapshot.data!.docs[index]['phoneno'],size: 16,),
+
+                                                  SizedBox(height: 10,),
+                                                  snapshot.data!.docs[index]['status']==0?  InkWell(
+                                                    onTap: (){
+
+
+                                                      FirebaseFirestore.instance.collection('user').doc(snapshot.data!.docs[index]['id']).update({
+
+                                                        'status':1
+                                                      }).then((value) {
+
+                                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Approved")));
+                                                        Navigator.pop(context);
+
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      height: 45,
+                                                      width: 250,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: btnColor,
+
+                                                      ),
+                                                      child: Center(child: AppText(text: "Approve",color: Colors.white)),
+                                                    ),
+                                                  ):
+
+
+                                                  InkWell(
+                                                    onTap: (){
+
+
+                                                      FirebaseFirestore.instance.collection('user').doc(snapshot.data!.docs[index]['id']).update({
+
+                                                        'status':0
+                                                      }).then((value) {
+
+                                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Removed")));
+                                                        Navigator.pop(context);
+
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      height: 45,
+                                                      width: 250,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        color: btnColor,
+
+                                                      ),
+                                                      child: Center(child: AppText(text: "Remove",color: Colors.white,)),
+                                                    ),
+                                                  )
+
+
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+
+
+                                      },
 
                                       icon: Icon(Icons.arrow_forward_ios),
                                     ),
