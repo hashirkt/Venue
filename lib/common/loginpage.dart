@@ -173,8 +173,8 @@ class _LoginPageState extends State<LoginPage> {
                                                 (route) => false);
                                           }
 
-                                          if (value.data()!['usertype'] ==
-                                              'auditorium') {
+                                          else if (value.data()!['usertype'] ==
+                                              'auditorium' && value.data()!['status'] ==1) {
                                             print(value.data()!['email']);
                                             print(value.data()!['audname']);
                                             print(value.data()!['phoneno']);
@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 (route) => false);
                                           }
 
-                                          if (value.data()!['usertype'] ==
+                                          else if(value.data()!['usertype'] ==
                                               'event' && value.data()!['status'] ==
                                              1) {
                                             Navigator.pushAndRemoveUntil(

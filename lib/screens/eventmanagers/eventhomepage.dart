@@ -13,6 +13,7 @@ import 'package:venue/constants/colors.dart';
 import 'package:venue/screens/eventmanagers/eventbookings.dart';
 import 'package:venue/screens/eventmanagers/eventfeedbacks.dart';
 import 'package:venue/screens/eventmanagers/eventpayments.dart';
+import 'package:venue/screens/eventmanagers/eventprofile.dart';
 import 'package:venue/screens/eventmanagers/eventservices.dart';
 import 'package:venue/screens/eventmanagers/ratings.dart';
 import 'package:venue/screens/eventmanagers/viewallnotificationevent.dart';
@@ -40,6 +41,11 @@ class _EventHomePageState extends State<EventHomePage> {
       appBar: AppBar(
         backgroundColor: btnColor,
         actions: [
+          IconButton(onPressed: (){
+
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllNotificationsEvent()));
+
+    }, icon: Icon(Icons.notifications)),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -177,7 +183,14 @@ class _EventHomePageState extends State<EventHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>ViewAllNotificationsEvent()));
+                                builder: (context) =>EventProfile(
+                                  id: widget.id,
+                                  eventname: widget.eventname,
+                                  email: widget.email,
+                                  place: widget.place,
+                                  phoneno: widget.phoneno,
+                                  pin: widget.pin,
+                                )));
                       },
                       child: Container(
                         height: 100,
@@ -188,7 +201,7 @@ class _EventHomePageState extends State<EventHomePage> {
                         ),
                         child: Center(
                             child: AppText(
-                          text: "View All\nNotification",
+                          text: "Edit Profile",
                           color: Colors.white,
                           size: 18,
                         )),

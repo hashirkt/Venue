@@ -153,7 +153,7 @@ class _EventRegistrationState extends State<EventRegistration> {
 
                 validator: (value){
                   if(value!.length<=5){
-                    return "Invalid Password";
+                    return "Password should contain minimum of 5 characters";
                   }
                 },
                 controller: passwordController,

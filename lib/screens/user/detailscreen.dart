@@ -48,6 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
   List<String> timeslots = ["Full day", "half day(Lunch)", "Half day(Dinner)"];
 
   var _facilities = [];
+  String?msg;
 
   String? _setTime, _setDate;
 
@@ -68,6 +69,8 @@ class _DetailsPageState extends State<DetailsPage> {
     _facilities.addAll(widget.facility);
     _dateController.text = DateFormat.yMd().format(DateTime.now());
   }
+
+  final _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -336,157 +339,150 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                     2,
                                                                 child:
                                                                     SingleChildScrollView(
-                                                                  child: Column(
-                                                                    children: [
-                                                                      SizedBox(
-                                                                        height:
-                                                                            40,
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment:
-                                                                            MainAxisAlignment.spaceBetween,
-                                                                        children: <
-                                                                            Widget>[
-                                                                          Expanded(
-                                                                            child:
-                                                                                Container(
-                                                                              width: 120,
-                                                                              child: TextFormField(
-                                                                                style: TextStyle(fontSize: 16),
-                                                                                enabled: false,
-                                                                                keyboardType: TextInputType.text,
-                                                                                controller: _dateController2,
-                                                                                onSaved: (String? val) {
-                                                                                  _setDate = val!;
-                                                                                },
-                                                                                decoration: InputDecoration(disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none), hintText: "Select Date", contentPadding: EdgeInsets.only(top: 0.0)),
+                                                                  child: Form(
+                                                                    key: _key,
+                                                                    child:
+                                                                        Column(
+                                                                      children: [
+                                                                        SizedBox(
+                                                                          height:
+                                                                              40,
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceBetween,
+                                                                          children: <
+                                                                              Widget>[
+                                                                            Expanded(
+                                                                              child: Container(
+                                                                                width: 120,
+                                                                                child: TextFormField(
+                                                                                  validator: (value) {
+                                                                                    if (value!.isEmpty) {
+                                                                                      return "Select a valid Date";
+                                                                                    }
+                                                                                  },
+                                                                                  style: TextStyle(fontSize: 16),
+                                                                                  enabled: false,
+                                                                                  keyboardType: TextInputType.text,
+                                                                                  controller: _dateController2,
+                                                                                  onSaved: (String? val) {
+                                                                                    _setDate = val!;
+                                                                                  },
+                                                                                  decoration: InputDecoration(disabledBorder: UnderlineInputBorder(borderSide: BorderSide.none), hintText: "Select Date", contentPadding: EdgeInsets.only(top: 0.0)),
+                                                                                ),
                                                                               ),
                                                                             ),
-                                                                          ),
-                                                                          InkWell(
-                                                                            onTap:
-                                                                                () async {
-                                                                              var picked = await showDatePicker(context: context, initialDate: selectedDate2, initialDatePickerMode: DatePickerMode.day, firstDate: DateTime(2015), lastDate: DateTime(2101));
-                                                                              if (picked != null)
-                                                                                setState(() {
-                                                                                  selectedDate2 = picked;
-                                                                                  _dateController2.text = DateFormat.yMd().format(selectedDate2);
+                                                                            InkWell(
+                                                                              onTap: () async {
+                                                                                var picked = await showDatePicker(context: context, initialDate: selectedDate2, initialDatePickerMode: DatePickerMode.day, firstDate: DateTime(2015), lastDate: DateTime(2101));
+                                                                                if (picked != null)
+                                                                                  setState(() {
+                                                                                    selectedDate2 = picked;
+                                                                                    if (selectedDate2.isAfter(DateTime.now())) {
+                                                                                      _dateController2.text = DateFormat.yMd().format(selectedDate2);
+                                                                                    }else{
+                                                                                      setState((){
+                                                                                        msg="Hello";
+                                                                                      });
+
+                                                                                    }
+                                                                                  });
+                                                                              },
+                                                                              child: Icon(Icons.calendar_month),
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              20,
+                                                                        ),
+                                                                        DropdownButtonFormField(
+                                                                          items:
+                                                                              timeslots.map((String time) {
+                                                                            return new DropdownMenuItem<String>(
+                                                                                value: time,
+                                                                                child: Row(
+                                                                                  children: <Widget>[
+                                                                                    Text(time),
+                                                                                  ],
+                                                                                ));
+                                                                          }).toList(),
+                                                                          onChanged:
+                                                                              (String? value) {
+                                                                            // do other stuff with time
+                                                                            setState(() =>
+                                                                                time = value);
+                                                                          },
+                                                                          value:
+                                                                              time,
+                                                                          decoration: InputDecoration(
+                                                                              enabledBorder: OutlineInputBorder(),
+                                                                              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
+                                                                              hintText: 'Time Slot'),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              20,
+                                                                        ),
+                                                                        TextFormField(
+                                                                          validator:
+                                                                              (value) {
+                                                                            if (value!.isEmpty) {
+                                                                              return "Select a valid Message";
+                                                                            }
+                                                                          },
+                                                                          controller:
+                                                                              commentcontroller,
+                                                                          maxLines:
+                                                                              5,
+                                                                          decoration: InputDecoration(
+                                                                              enabledBorder: OutlineInputBorder(),
+                                                                              focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
+                                                                              hintText: "Comments"),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          height:
+                                                                              20,
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            if (_key.currentState!.validate()) {
+                                                                              if (time != null) {
+                                                                                FirebaseFirestore.instance.collection('bookings').doc(docid).set({
+                                                                                  'audname': widget.name,
+                                                                                  'bookingid': docid,
+                                                                                  'bookingDate': _dateController.text,
+                                                                                  'session': time,
+                                                                                  'audid': widget.id,
+                                                                                  'comments': commentcontroller.text,
+                                                                                  'status': 0,
+                                                                                  'packageid': snapshot.data!.docs[index]['packageId'],
+                                                                                  'reply': "",
+                                                                                  'replystatus': 0,
+                                                                                  'customerid': widget.customerid,
+                                                                                  'paymentstatus': 0,
+                                                                                  'paymentamount': snapshot.data!.docs[index]['price']
+                                                                                }).then((value) {
+                                                                                  Navigator.pop(context);
                                                                                 });
-                                                                            },
-                                                                            child:
-                                                                                Icon(Icons.calendar_month),
-                                                                          )
-                                                                        ],
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            20,
-                                                                      ),
-                                                                      DropdownButtonFormField(
-                                                                        items: timeslots.map((String
-                                                                            time) {
-                                                                          return new DropdownMenuItem<String>(
-                                                                              value: time,
-                                                                              child: Row(
-                                                                                children: <Widget>[
-                                                                                  Text(time),
-                                                                                ],
-                                                                              ));
-                                                                        }).toList(),
-                                                                        onChanged:
-                                                                            (String?
-                                                                                value) {
-                                                                          // do other stuff with time
-                                                                          setState(() =>
-                                                                              time = value);
-                                                                        },
-                                                                        value:
-                                                                            time,
-                                                                        decoration: InputDecoration(
-                                                                            enabledBorder:
-                                                                                OutlineInputBorder(),
-                                                                            focusedBorder:
-                                                                                OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
-                                                                            hintText: 'Time Slot'),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            20,
-                                                                      ),
-                                                                      TextFormField(
-                                                                        controller:
-                                                                            commentcontroller,
-                                                                        maxLines:
-                                                                            5,
-                                                                        decoration: InputDecoration(
-                                                                            enabledBorder:
-                                                                                OutlineInputBorder(),
-                                                                            focusedBorder:
-                                                                                OutlineInputBorder(borderSide: BorderSide(color: btnColor, width: 3)),
-                                                                            hintText: "Comments"),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            20,
-                                                                      ),
-                                                                    ],
+                                                                              } else {
+                                                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Select a Time Slot")));
+                                                                              }
+                                                                            }
+                                                                          },
+                                                                          child:
+                                                                              const Text('OK'),
+                                                                        ),
+
+                                                                      ],
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              actions: <Widget>[
-                                                                TextButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        .instance
-                                                                        .collection(
-                                                                            'bookings')
-                                                                        .doc(
-                                                                            docid)
-                                                                        .set({
-                                                                      'audname':
-                                                                          widget
-                                                                              .name,
-                                                                      'bookingid':
-                                                                          docid,
-                                                                      'bookingDate':
-                                                                          _dateController
-                                                                              .text,
-                                                                      'session':
-                                                                          time,
-                                                                      'audid':
-                                                                          widget
-                                                                              .id,
-                                                                      'comments':
-                                                                          commentcontroller
-                                                                              .text,
-                                                                      'status':
-                                                                          0,
-                                                                      'packageid': snapshot
-                                                                          .data!
-                                                                          .docs[index]['packageId'],
-                                                                      'reply':
-                                                                          "",
-                                                                      'replystatus':
-                                                                          0,
-                                                                      'customerid':
-                                                                          widget
-                                                                              .customerid,
-                                                                      'paymentstatus':
-                                                                          0,
-                                                                      'paymentamount': snapshot
-                                                                          .data!
-                                                                          .docs[index]['price']
-                                                                    }).then((value) {
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  },
-                                                                  child:
-                                                                      const Text(
-                                                                          'OK'),
-                                                                ),
-                                                              ],
+                                                              actions: <
+                                                                  Widget>[],
                                                             ),
                                                           );
                                                         },

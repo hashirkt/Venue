@@ -85,17 +85,28 @@ class _ViewAllEventServiceUSerState extends State<ViewAllEventServiceUSer> {
                                     children: [
                                       Container(
                                         height: 270,
-                                        width: 250,
+
                                         color: Colors.white,
                                         child: Column(
                                           crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                           children: [
                                             Container(
+
                                               height: 200,
 
-                                            child: snapshot.data!.docs[index]['title']=='Photography'?Image.asset('assets/images/img2.jpg',fit: BoxFit.cover,):
-                                            snapshot.data!.docs[index]['title']=='Catering Service'?Image.asset('assets/images/images.jpg',fit: BoxFit.cover):Image.asset('assets/images/logo.png',fit: BoxFit.cover)
+
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(
+                                                  snapshot.data!
+                                                      .docs[index]
+                                                  ['imgurl'],
+
+                                              )
+                                            )
+                                          ),
                                             ),
                                             Container(
                                               height: 70,
@@ -130,7 +141,7 @@ class _ViewAllEventServiceUSerState extends State<ViewAllEventServiceUSer> {
                                                           text: snapshot
                                                               .data!
                                                               .docs[index]
-                                                          ['title'],
+                                                          ['eventname'],
                                                           size: 20,
                                                         ),
                                                         AppText(
@@ -150,7 +161,7 @@ class _ViewAllEventServiceUSerState extends State<ViewAllEventServiceUSer> {
                                         ),
                                       ),
                                       Positioned(
-                                        top: 10,
+                                       bottom: 10,
                                         right: 10,
                                         child: Container(
                                           height: 40,

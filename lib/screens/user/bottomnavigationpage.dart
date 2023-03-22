@@ -52,6 +52,11 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
   getdata() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     imgurl = _pref.getString('img');
+
+    setState((){
+
+
+    });
   }
 
   SetData() {
@@ -136,7 +141,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                                         phone: widget.phone,
                                       )));
                         },
-                        child: imgurl != null
+                        child: img != null
                             ? Container(
                                 height: 50,
                                 width: 50,
@@ -144,8 +149,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                                     color: btnColor,
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
+                                      fit: BoxFit.cover,
                                         image:
-                                            NetworkImage(imgurl.toString()))),
+                                            NetworkImage(img.toString()))),
                               )
                             : Container(
                                 height: 50,
@@ -155,7 +161,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/userdefault.jpg'))),
+                                            'assets/images/userdefault.png'))),
                               ),
                       ),
                       SizedBox(
