@@ -262,73 +262,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
                 ],
               ),
             ),
-
-            SizedBox(height: 10,),
-            Container(
-
-
-              height: 100,
-              child:
-              Row(
-                children: [
-
-
-                  Expanded(
-                    child: InkWell(
-
-                      onTap: (){
-
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ManageServices()));
-                      },
-
-                      child: Container(
-
-                        height: 100,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: backColor,
-                          borderRadius: BorderRadius.circular(12),
-
-                        ),
-                        child: Center(child: AppText(text: "Manage Services",color: Colors.white,size: 18,)),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(width: 20,),
-
-                  Expanded(
-                    child: InkWell(
-
-                      onTap: (){
-
-
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ManageAuditoriums()));
-                      },
-
-                      child: Container(
-                        height: 100,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          color: backColor,
-                          borderRadius: BorderRadius.circular(12),
-
-                        ),
-                        child: Center(child: AppText(text: "Manage\nAuditoriums",color: Colors.white,size: 18,)),
-
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-            )
-
-
-
-
-          ],
+],
         ),
       ),
     );

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">266552419106-ei6vp5umpm5maam3vje2ape1d34vqanv.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">266552419106</string>
+    <string name="google_api_key" translatable="false">AIzaSyBZrSNyYCDfJTLQh7wJQ59KW4AmfhCgfxw</string>
+    <string name="google_app_id" translatable="false">1:266552419106:android:61c508f0799034aedb3b7b</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBZrSNyYCDfJTLQh7wJQ59KW4AmfhCgfxw</string>
+    <string name="google_storage_bucket" translatable="false">venue-2beb5.appspot.com</string>
+    <string name="project_id" translatable="false">venue-2beb5</string>
+</resources>
